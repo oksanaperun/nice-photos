@@ -1,0 +1,6 @@
+<div class="search-box">
+  <input placeholder="Search for nice photos"
+        #searchInput
+        (keyup.enter)="searchPhotos(searchInput.value)">
+  <button (click)="searchPhotos(searchInput.value)">Search</button>
+</div>
