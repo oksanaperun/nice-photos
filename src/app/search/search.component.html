@@ -1,6 +1,17 @@
 <div class="search-box">
-  <input placeholder="Search for nice photos"
-        #searchInput
-        (keyup.enter)="searchPhotos(searchInput.value)">
-  <button (click)="searchPhotos(searchInput.value)">Search</button>
+  <button mat-mini-fab color="primary"
+          (click)="searchPhotos(searchInput.value)">
+    <i class="material-icons">search</i>
+  </button>
+
+  <mat-form-field>
+    <input matInput placeholder="Search for nice photos" #searchInput
+           (keyup.enter)="searchPhotos(searchInput.value)">
+  </mat-form-field>
 </div>
+
+<mat-grid-list cols="3" gutterSize="10px" rowHeight="15em" class="search-results">
+  <mat-grid-tile *ngFor="let photo of photos">
+    <img [src]="photo.smallUrl">
+  </mat-grid-tile>
+</mat-grid-list>

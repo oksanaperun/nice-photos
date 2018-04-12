@@ -1,3 +1,17 @@
 .search-box {
   text-align: center;
 }
+
+.mat-input-element,
+.mat-form-field-placeholder-wrapper {
+  font-family: 'Nunito', serif;
+}
+
+.mat-input-element {
+  font-size: x-large;
+}
+
+.search-results {
+  width: 90%;
+  left: 5%;
+}

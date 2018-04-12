@@ -14,6 +14,8 @@ export class PhotoService {
     const header = new HttpHeaders().set('Accept-Version', 'v1');
     let params = new HttpParams().set('query', searchText);
     params = params.append('client_id', clientId);
+    params = params.append('per_page', '9');
+    params = params.append('orientation', 'landscape');
 
     return this.http.get<any>(`${this.baseUrl}/search/photos`, {
       headers: header,

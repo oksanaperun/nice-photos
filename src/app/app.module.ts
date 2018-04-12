@@ -1,6 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
+import { MatButtonModule, MatGridListModule, MatInputModule } from '@angular/material';
 
 import { AppComponent } from './app.component';
 import { SearchComponent } from './search/search.component';
@@ -13,7 +15,11 @@ import { PhotoService } from './photo.service';
   ],
   imports: [
     BrowserModule,
-    HttpClientModule
+    HttpClientModule,
+    MatButtonModule,
+    MatGridListModule,
+    MatInputModule,
+    NoopAnimationsModule
   ],
   providers: [PhotoService],
   bootstrap: [AppComponent]

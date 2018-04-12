@@ -10,12 +10,19 @@ import { PhotoService } from '../photo.service';
 })
 
 export class SearchComponent implements OnInit {
+  photos = [];
+
   constructor(private photoService: PhotoService) { }
 
   searchPhotos(searchText): void {
     this.photoService.getPhotosBySearchText(searchText)
       .subscribe(response => {
-        console.log(response);
+        this.photos = response.results.map(photo => {
+          return {
+            id: photo.id,
+            smallUrl: photo.urls.small
+          };
+        });
       });
   }
 
