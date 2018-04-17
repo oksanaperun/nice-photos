@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
 
 import { PhotoService } from '../photo.service';
 
@@ -11,11 +10,19 @@ import { PhotoService } from '../photo.service';
 
 export class SearchComponent implements OnInit {
   photos = [];
+  isPhotosEmpty = false;
+  searchTips = [
+    'Check your spelling and try again',
+    'Try a similar but different search term',
+    'Be less specific in your wording for a wider search result'
+  ];
+  searchText = '';
 
   constructor(private photoService: PhotoService) { }
 
-  searchPhotos(searchText): void {
-    this.photoService.getPhotosBySearchText(searchText)
+  searchPhotos(): void {
+    this.isPhotosEmpty = false;
+    this.photoService.getPhotosBySearchText(this.searchText)
       .subscribe(response => {
         this.photos = response.results.map(photo => {
           return {
@@ -23,6 +30,9 @@ export class SearchComponent implements OnInit {
             smallUrl: photo.urls.small
           };
         });
+
+        if (this.photos.length === 0)
+          this.isPhotosEmpty = true;
       });
   }
 

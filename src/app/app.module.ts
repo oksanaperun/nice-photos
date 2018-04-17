@@ -1,6 +1,7 @@
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { MatButtonModule, MatGridListModule, MatInputModule } from '@angular/material';
 
@@ -15,6 +16,7 @@ import { PhotoService } from './photo.service';
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     HttpClientModule,
     MatButtonModule,
     MatGridListModule,

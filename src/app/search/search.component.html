@@ -1,13 +1,21 @@
-<div class="search-box">
-  <button mat-mini-fab color="primary"
-          (click)="searchPhotos(searchInput.value)">
+<form class="search-form" (ngSubmit)="searchPhotos()" #searchForm="ngForm">
+  <button mat-mini-fab color="primary" type="submit"
+          [disabled]="!searchForm.form.valid">
     <i class="material-icons">search</i>
   </button>
 
   <mat-form-field>
-    <input matInput placeholder="Search for nice photos" #searchInput
-           (keyup.enter)="searchPhotos(searchInput.value)">
+    <input matInput placeholder="Search for nice photos" name="Search text"
+           [(ngModel)]="searchText" required>
   </mat-form-field>
+</form>
+
+<div class="no-search-results-box" *ngIf="isPhotosEmpty">
+  <h3>Sorry, we couldn't find any photos matching "{{searchText}}"</h3>
+  <h4>Search tips:</h4>
+  <ul>
+    <li *ngFor="let tip of searchTips">{{tip}}</li>
+  </ul>
 </div>
 
 <mat-grid-list cols="3" gutterSize="10px" rowHeight="15em" class="search-results">
