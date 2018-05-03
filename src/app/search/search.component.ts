@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-
 import { PhotoService } from '../photo.service';
 
 @Component({
@@ -9,31 +8,32 @@ import { PhotoService } from '../photo.service';
 })
 
 export class SearchComponent implements OnInit {
+  searchText: string;
+  processedSearchText: string;
   photos = [];
-  isPhotosEmpty = false;
-  searchTips = [
-    'Check your spelling and try again',
-    'Try a similar but different search term',
-    'Be less specific in your wording for a wider search result'
-  ];
-  searchText = '';
+  totalPhotosCount: number;
+  isSearchInProgress = false;
 
   constructor(private photoService: PhotoService) { }
 
   searchPhotos(): void {
-    this.isPhotosEmpty = false;
-    this.photoService.getPhotosBySearchText(this.searchText)
-      .subscribe(response => {
-        this.photos = response.results.map(photo => {
-          return {
-            id: photo.id,
-            smallUrl: photo.urls.small
-          };
-        });
+    if (this.searchText.trim() !== '') {
+      this.isSearchInProgress = true;
+      this.processedSearchText = this.searchText;
 
-        if (this.photos.length === 0)
-          this.isPhotosEmpty = true;
-      });
+      this.photoService.getPhotosBySearchText(this.searchText)
+        .subscribe(response => {
+          this.photos = response.results.map(photo => {
+            return {
+              id: photo.id,
+              smallUrl: photo.urls.small
+            };
+          });
+
+          this.isSearchInProgress = false;
+          this.totalPhotosCount = response.total;
+        });
+    }
   }
 
   ngOnInit() {

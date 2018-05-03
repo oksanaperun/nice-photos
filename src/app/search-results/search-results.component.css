@@ -1,0 +1,39 @@
+.no-search-results-box {
+  font-family: 'Nunito', serif;
+}
+
+.no-search-results-box {
+  margin: 0 auto;
+  width: 50%;
+}
+
+h3, h4, h5 {
+  text-align: center;
+}
+
+h3 {
+  color: #f44336;
+  margin-top: 40px;
+}
+
+h4 {
+  color: #673ab7;
+  margin-bottom: 5px;
+}
+
+h5 {
+  color: rgba(0, 0, 0, 0.5);
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
+ul {
+  font-size: small;
+  margin: 0 auto;
+  width: 65%;
+}
+
+.search-results {
+  width: 90%;
+  left: 5%;
+}

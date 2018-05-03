@@ -3,39 +3,22 @@
 }
 
 .mat-input-element,
-.mat-form-field-placeholder-wrapper,
-.no-search-results-box {
+.mat-form-field-placeholder-wrapper {
   font-family: 'Nunito', serif;
+}
+
+.mat-input-container {
+  margin-left: 5px;
 }
 
 .mat-input-element {
   font-size: x-large;
 }
 
-.no-search-results-box {
-  margin: 0 auto;
-  width: 50%;
-}
-
-h3 {
-  color: #f44336;
-  text-align: center;
-  margin-top: 40px;
-}
-
-h4 {
-  color: #673ab7;
-  text-align: center;
-  margin-bottom: 5px;
-}
-
-ul {
-  font-size: small;
-  margin: 0 auto;
-  width: 65%;
-}
-
-.search-results {
-  width: 90%;
-  left: 5%;
+.mat-spinner {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
