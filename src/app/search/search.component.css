@@ -9,10 +9,12 @@
 
 .mat-input-container {
   margin-left: 5px;
+  width: 300px;
 }
 
 .mat-input-element {
   font-size: x-large;
+  color: #673ab7;
 }
 
 .mat-spinner {

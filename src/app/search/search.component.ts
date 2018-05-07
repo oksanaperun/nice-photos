@@ -1,5 +1,15 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, NgForm, Validators } from '@angular/forms';
+import { ErrorStateMatcher } from '@angular/material/core';
 import { PhotoService } from '../photo.service';
+
+export class SearchTextErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, form: NgForm | null): boolean {
+    const isSubmitted = form && form.submitted;
+
+    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
+  }
+}
 
 @Component({
   selector: 'app-search',
@@ -8,8 +18,12 @@ import { PhotoService } from '../photo.service';
 })
 
 export class SearchComponent implements OnInit {
+  searchTextFormControl = new FormControl('', [
+    Validators.required,
+    Validators.pattern('((?=.*[a-zA-Z])|(?=.*[0-9]))[a-zA-Z0-9 ]+')
+  ]);
+  matcher = new SearchTextErrorStateMatcher();
   searchText: string;
-  processedSearchText: string;
   photos = [];
   totalPhotosCount: number;
   isSearchInProgress = false;
@@ -17,9 +31,10 @@ export class SearchComponent implements OnInit {
   constructor(private photoService: PhotoService) { }
 
   searchPhotos(): void {
-    if (this.searchText.trim() !== '') {
+    this.searchText = this.searchTextFormControl.value.trim();
+
+    if (this.searchText !== '') {
       this.isSearchInProgress = true;
-      this.processedSearchText = this.searchText;
 
       this.photoService.getPhotosBySearchText(this.searchText)
         .subscribe(response => {

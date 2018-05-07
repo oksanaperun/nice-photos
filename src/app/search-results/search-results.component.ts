@@ -10,7 +10,7 @@ import { SearchComponent } from '../search/search.component';
 export class SearchResultsComponent {
   @Input() photos;
   @Input() totalPhotosCount: number;
-  @Input() processedSearchText: string;
+  @Input() searchText: string;
   @Input() isSearchInProgress: boolean;
   searchTips = [
     'Check your spelling and try again',

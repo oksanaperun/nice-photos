@@ -1,6 +1,6 @@
-<div class="search-results-box" [ngStyle]="{'opacity': isSearchInProgress ? 0.5 : 1}">
+<div class="search-results-box" [style.opacity]="isSearchInProgress ? 0.5 : 1">
   <div class="no-search-results-box" *ngIf="totalPhotosCount == 0 && !isSearchInProgress">
-    <h3>Sorry, we couldn't find any photos matching "{{processedSearchText}}"</h3>
+    <h3>Sorry, we couldn't find any photos matching "{{searchText}}"</h3>
     <h4>Search tips:</h4>
     <ul>
       <li *ngFor="let tip of searchTips">{{tip}}</li>
@@ -8,8 +8,7 @@
   </div>
 
   <h5 *ngIf="totalPhotosCount > 0">{{totalPhotosCount}} photo(s) found</h5>
-  <mat-grid-list cols="3" gutterSize="10px" rowHeight="15em"
-                 class="search-results" >
+  <mat-grid-list cols="3" gutterSize="10px" rowHeight="15em" class="search-results">
     <mat-grid-tile *ngFor="let photo of photos">
       <img [src]="photo.smallUrl">
     </mat-grid-tile>

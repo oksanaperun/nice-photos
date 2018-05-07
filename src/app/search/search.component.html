@@ -1,16 +1,21 @@
 <form class="search-form" (ngSubmit)="searchPhotos()" #searchForm="ngForm">
-  <button mat-mini-fab color="primary" type="submit"
-          [disabled]="!searchForm.form.valid">
+  <button mat-mini-fab color="primary" type="submit" [disabled]="searchTextFormControl.invalid">
     <i class="material-icons">search</i>
   </button>
 
   <mat-form-field>
-    <input matInput placeholder="Search for nice photos" name="Search text"
-           [(ngModel)]="searchText" required>
+    <input matInput placeholder="Search nice photos" [formControl]="searchTextFormControl"
+           [errorStateMatcher]="matcher">
+    <mat-error *ngIf="searchTextFormControl.hasError('required')">
+      Search text is <strong>required</strong>
+    </mat-error>
+    <mat-error *ngIf="searchTextFormControl.hasError('pattern')">
+      Search text with special characters or just spaces is <strong>not allowed</strong>
+    </mat-error>
   </mat-form-field>
 </form>
 
-<app-search-results [isSearchInProgress]="isSearchInProgress" [processedSearchText]="processedSearchText"
+<app-search-results [isSearchInProgress]="isSearchInProgress" [searchText]="searchText"
                     [photos]="photos" [totalPhotosCount]="totalPhotosCount">
 </app-search-results>
 
