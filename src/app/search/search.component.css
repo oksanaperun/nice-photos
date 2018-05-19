@@ -14,7 +14,7 @@
 
 .mat-input-element {
   font-size: x-large;
-  color: #673ab7;
+  color: rgba(0,0,0,.87);;
 }
 
 .mat-spinner {

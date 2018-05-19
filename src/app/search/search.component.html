@@ -15,8 +15,12 @@
   </mat-form-field>
 </form>
 
-<app-search-results [isSearchInProgress]="isSearchInProgress" [searchText]="searchText"
-                    [photos]="photos" [totalPhotosCount]="totalPhotosCount">
+<app-empty-search-results [searchText]="searchText"
+                          *ngIf="totalPhotosCount == 0 && !isSearchInProgress">
+</app-empty-search-results>
+
+<app-search-results [isSearchInProgress]="isSearchInProgress" [photos]="photos"
+                    [totalPhotosCount]="totalPhotosCount">
 </app-search-results>
 
 <mat-spinner diameter="75" *ngIf="isSearchInProgress"></mat-spinner>

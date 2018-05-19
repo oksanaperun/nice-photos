@@ -7,13 +7,15 @@ import { MatButtonModule, MatGridListModule, MatInputModule, MatProgressSpinnerM
 import { AppComponent } from './app.component';
 import { SearchComponent } from './search/search.component';
 import { SearchResultsComponent } from './search-results/search-results.component';
+import { EmptySearchResultsComponent } from './empty-search-results/empty-search-results.component';
 import { PhotoService } from './photo.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     SearchComponent,
-    SearchResultsComponent
+    SearchResultsComponent,
+    EmptySearchResultsComponent
   ],
   imports: [
     BrowserModule,
