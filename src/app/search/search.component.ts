@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { PhotoService } from '../photo.service';
@@ -17,16 +17,17 @@ export class SearchTextErrorStateMatcher implements ErrorStateMatcher {
   styleUrls: ['./search.component.css']
 })
 
-export class SearchComponent implements OnInit {
+export class SearchComponent {
   searchTextFormControl = new FormControl('', [
     Validators.required,
     Validators.pattern('((?=.*[a-zA-Z])|(?=.*[0-9]))[a-zA-Z0-9 ]+')
   ]);
   matcher = new SearchTextErrorStateMatcher();
   searchText: string;
-  photos = [];
+  photos: any[];
   totalPhotosCount: number;
-  isSearchInProgress = false;
+  isSearchInProgress: boolean;
+  isErrorCaught: boolean;
 
   constructor(private photoService: PhotoService) { }
 
@@ -37,20 +38,26 @@ export class SearchComponent implements OnInit {
       this.isSearchInProgress = true;
 
       this.photoService.getPhotosBySearchText(this.searchText)
-        .subscribe(response => {
-          this.photos = response.results.map(photo => {
-            return {
-              id: photo.id,
-              smallUrl: photo.urls.small
-            };
+        .subscribe(
+          response => {
+            this.isSearchInProgress = false;
+            this.isErrorCaught = false;
+            this.totalPhotosCount = response.total;
+            this.setPhotos(response.results);
+          },
+          error => {
+            this.isSearchInProgress = false;
+            this.isErrorCaught = true;
           });
-
-          this.isSearchInProgress = false;
-          this.totalPhotosCount = response.total;
-        });
     }
   }
 
-  ngOnInit() {
+  setPhotos(responseResults): void {
+    this.photos = responseResults.map(result => {
+      return {
+        id: result.id,
+        smallUrl: result.urls.small
+      };
+    });
   }
 }
