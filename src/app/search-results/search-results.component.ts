@@ -7,7 +7,16 @@ import { Component, Input } from '@angular/core';
 })
 
 export class SearchResultsComponent {
-  @Input() photos;
+  @Input() photos: any[];
   @Input() totalPhotosCount: number;
   @Input() isSearchInProgress: boolean;
+
+  hideLoading(photo) {
+    photo.hasLoaded = true;
+  }
+
+  showLoadingError(img, photo) {
+    img.style.display = 'none';
+    photo.hasLoadingError = true;
+  }
 }
