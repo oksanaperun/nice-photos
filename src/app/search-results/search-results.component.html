@@ -1,8 +1,11 @@
 <div [style.opacity]="isSearchInProgress ? 0.5 : 1">
   <h5 *ngIf="totalPhotosCount > 0">{{totalPhotosCount}} photo(s) found</h5>
+
   <mat-grid-list cols="3" gutterSize="10px" rowHeight="15em" class="search-results">
     <mat-grid-tile *ngFor="let photo of photos">
-      <img #img [src]="photo.smallUrl" (load)="hideLoading(photo)" (error)="showLoadingError(img, photo)">
+      <img #img [src]="photo.smallUrl" (load)="hideLoading(photo)"
+           (error)=" hideImage(img); showLoadingError(photo)">
+
       <span *ngIf="!photo.hasLoaded && !photo.hasLoadingError">Loading...</span>
       <span *ngIf="photo.hasLoadingError">Photo can't be loaded</span>
     </mat-grid-tile>

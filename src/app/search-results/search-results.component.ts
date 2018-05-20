@@ -15,8 +15,11 @@ export class SearchResultsComponent {
     photo.hasLoaded = true;
   }
 
-  showLoadingError(img, photo) {
+  hideImage(img) {
     img.style.display = 'none';
+  }
+
+  showLoadingError(photo) {
     photo.hasLoadingError = true;
   }
 }

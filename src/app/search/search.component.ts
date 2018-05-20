@@ -3,14 +3,6 @@ import { FormControl, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { PhotoService } from '../photo.service';
 
-export class SearchTextErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(control: FormControl | null, form: NgForm | null): boolean {
-    const isSubmitted = form && form.submitted;
-
-    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
-  }
-}
-
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
@@ -31,33 +23,50 @@ export class SearchComponent {
 
   constructor(private photoService: PhotoService) { }
 
-  searchPhotos(): void {
+  trimSearchText() {
     this.searchText = this.searchTextFormControl.value.trim();
-
-    if (this.searchText !== '') {
-      this.isSearchInProgress = true;
-
-      this.photoService.getPhotosBySearchText(this.searchText)
-        .subscribe(
-          response => {
-            this.isSearchInProgress = false;
-            this.isErrorCaught = false;
-            this.totalPhotosCount = response.total;
-            this.setPhotos(response.results);
-          },
-          error => {
-            this.isSearchInProgress = false;
-            this.isErrorCaught = true;
-          });
-    }
   }
 
-  setPhotos(responseResults): void {
+  searchPhotos() {
+    this.setStartSearchValues();
+
+    this.photoService.getPhotosBySearchText(this.searchText)
+      .subscribe(
+        response => this.handleResponseOnSuccess(response),
+        error => this.handleResponseOnError()
+      );
+  }
+
+  setStartSearchValues() {
+    this.isSearchInProgress = true;
+    this.isErrorCaught = false;
+  }
+
+  handleResponseOnSuccess(response) {
+    this.isSearchInProgress = false;
+    this.totalPhotosCount = response.total;
+    this.setPhotos(response.results);
+  }
+
+  handleResponseOnError() {
+    this.isSearchInProgress = false;
+    this.isErrorCaught = true;
+  }
+
+  setPhotos(responseResults) {
     this.photos = responseResults.map(result => {
       return {
         id: result.id,
         smallUrl: result.urls.small
       };
     });
+  }
+}
+
+export class SearchTextErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, form: NgForm | null): boolean {
+    const isSubmitted = form && form.submitted;
+
+    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
   }
 }
