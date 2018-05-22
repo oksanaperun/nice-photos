@@ -1,11 +1,11 @@
-import { TestBed, ComponentFixture } from '@angular/core/testing';
+import { TestBed, ComponentFixture, async } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { MatGridListModule } from '@angular/material';
 import { SearchResultsComponent } from './search-results.component';
 
 describe('SearchResultsComponent', () => {
-  const photoWithValidImage = {smallUrl: 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=='};
-  const photoWithInvalidImage = {smallUrl: 'data:image/jpeg;base64,'};
+  const photoWithValidImage = { smallUrl: 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==' };
+  const photoWithInvalidImage = { smallUrl: 'data:image/jpeg;base64,' };
   let component: SearchResultsComponent;
   let fixture: ComponentFixture<SearchResultsComponent>;
 
@@ -50,49 +50,49 @@ describe('SearchResultsComponent', () => {
     expect(debugElem.nativeElement.innerText).toBe('Loading...');
   });
 
-  it('should hide span element when image has loaded', () => {
+  it('should hide span element when image has loaded', async(() => {
     component.photos = [photoWithValidImage];
     fixture.detectChanges();
 
     const debugElem = fixture.debugElement.query(By.css('img'));
     const elem = debugElem.nativeElement;
 
-    elem.onload = function () {
+    elem.onload = () => {
       fixture.detectChanges();
 
       const debugElems = fixture.debugElement.queryAll(By.css('span'));
 
       expect(debugElems.length).toBe(0);
     };
-  });
+  }));
 
-  it('should hide image when image can not be loaded', () => {
+  it('should hide image when image can not be loaded', async(() => {
     component.photos = [photoWithInvalidImage];
     fixture.detectChanges();
 
     const debugElem = fixture.debugElement.query(By.css('img'));
     const elem = debugElem.nativeElement;
 
-    elem.onerror = function () {
+    elem.onerror = () => {
       fixture.detectChanges();
 
       expect(elem.style.display).toBe('none');
     };
-  });
+  }));
 
-  it('should show loading error text when image can not be loaded', () => {
+  it('should show loading error text when image can not be loaded', async(() => {
     component.photos = [photoWithInvalidImage];
     fixture.detectChanges();
 
     const debugElem = fixture.debugElement.query(By.css('img'));
     const elem = debugElem.nativeElement;
 
-    elem.onerror = function () {
+    elem.onerror = () => {
       fixture.detectChanges();
 
       const debugElem = fixture.debugElement.query(By.css('span'));
 
       expect(debugElem.nativeElement.innerText).toBe('Photo can\'t be loaded');
     };
-  });
+  }));
 });
