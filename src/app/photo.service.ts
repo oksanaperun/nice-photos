@@ -6,7 +6,7 @@ import { clientId } from '../config';
 
 @Injectable()
 export class PhotoService {
-  private baseUrl = 'https://api.unsplash.com';
+  readonly API_URL = 'https://api.unsplash.com';
 
   constructor(private http: HttpClient) { }
 
@@ -17,7 +17,7 @@ export class PhotoService {
     params = params.append('per_page', '9');
     params = params.append('orientation', 'landscape');
 
-    return this.http.get<any>(`${this.baseUrl}/search/photos`, {
+    return this.http.get<any>(`${this.API_URL}/search/photos`, {
       headers: header,
       params: params
     });

@@ -42,7 +42,7 @@ describe('SearchResultsComponent', () => {
   });
 
   it('should show loading text when image is not loaded yet', () => {
-    component.photos = [photoWithValidImage];
+    component.photos = [1];
     fixture.detectChanges();
 
     const debugElem = fixture.debugElement.query(By.css('span'));
