@@ -4,6 +4,8 @@ import { MatGridListModule } from '@angular/material';
 import { SearchResultsComponent } from './search-results.component';
 
 describe('SearchResultsComponent', () => {
+  const photoWithValidImage = {smallUrl: 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=='};
+  const photoWithInvalidImage = {smallUrl: 'data:image/jpeg;base64,'};
   let component: SearchResultsComponent;
   let fixture: ComponentFixture<SearchResultsComponent>;
 
@@ -15,7 +17,6 @@ describe('SearchResultsComponent', () => {
 
     fixture = TestBed.createComponent(SearchResultsComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should be created', () => {
@@ -32,7 +33,7 @@ describe('SearchResultsComponent', () => {
   });
 
   it('should render photo tiles', () => {
-    component.photos = [1, 2, 3];
+    component.photos = [photoWithValidImage, photoWithValidImage, photoWithValidImage];
     fixture.detectChanges();
 
     const debugElems = fixture.debugElement.queryAll(By.css('mat-grid-tile'));
@@ -40,42 +41,58 @@ describe('SearchResultsComponent', () => {
     expect(debugElems.length).toBe(component.photos.length);
   });
 
-  it('should show loading text when photo is not loaded yet', () => {
-    component.photos = [{ hasLoaded: false }];
+  it('should show loading text when image is not loaded yet', () => {
+    component.photos = [photoWithValidImage];
     fixture.detectChanges();
 
-    const debugElem = fixture.debugElement.query(By.css('mat-grid-tile span'));
+    const debugElem = fixture.debugElement.query(By.css('span'));
 
     expect(debugElem.nativeElement.innerText).toBe('Loading...');
   });
 
-  it('should show loading error text when photo has loading error', () => {
-    component.photos = [{ hasLoadingError: true }];
+  it('should hide span element when image has loaded', () => {
+    component.photos = [photoWithValidImage];
     fixture.detectChanges();
 
-    const debugElem = fixture.debugElement.query(By.css('mat-grid-tile span'));
+    const debugElem = fixture.debugElement.query(By.css('img'));
+    const elem = debugElem.nativeElement;
 
-    expect(debugElem.nativeElement.innerText).toBe('Photo can\'t be loaded');
+    elem.onload = function () {
+      fixture.detectChanges();
+
+      const debugElems = fixture.debugElement.queryAll(By.css('span'));
+
+      expect(debugElems.length).toBe(0);
+    };
   });
 
-  xit('should call #hideLoading when image has loaded', () => {
-    const spy = spyOn(component, 'hideLoading');
+  it('should hide image when image can not be loaded', () => {
+    component.photos = [photoWithInvalidImage];
+    fixture.detectChanges();
 
-    // emulate image onload
-    expect(spy).toHaveBeenCalled();
+    const debugElem = fixture.debugElement.query(By.css('img'));
+    const elem = debugElem.nativeElement;
+
+    elem.onerror = function () {
+      fixture.detectChanges();
+
+      expect(elem.style.display).toBe('none');
+    };
   });
 
-  xit('should call #hideImage when image has loading error', () => {
-    const spy = spyOn(component, 'hideImage');
+  it('should show loading error text when image can not be loaded', () => {
+    component.photos = [photoWithInvalidImage];
+    fixture.detectChanges();
 
-    // emulate image onerror
-    expect(spy).toHaveBeenCalled();
-  });
+    const debugElem = fixture.debugElement.query(By.css('img'));
+    const elem = debugElem.nativeElement;
 
-  xit('should call #showLoadingError when image has loading error', () => {
-    const spy = spyOn(component, 'showLoadingError');
+    elem.onerror = function () {
+      fixture.detectChanges();
 
-    // emulate image onerror
-    expect(spy).toHaveBeenCalled();
+      const debugElem = fixture.debugElement.query(By.css('span'));
+
+      expect(debugElem.nativeElement.innerText).toBe('Photo can\'t be loaded');
+    };
   });
 });
