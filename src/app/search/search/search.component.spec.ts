@@ -5,7 +5,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { SearchComponent } from './search.component';
 import { SearchResultsComponent } from '../search-results/search-results.component';
 import { EmptySearchResultsComponent } from '../empty-search-results/empty-search-results.component';
-import { PhotoService } from '../photo.service';
+import { AppService } from '../../app.service';
 
 describe('SearchComponent', () => {
   let component: SearchComponent;
@@ -27,7 +27,7 @@ describe('SearchComponent', () => {
         NoopAnimationsModule,
         ReactiveFormsModule
       ],
-      providers: [{ provide: PhotoService, useValue: null }]
+      providers: [{ provide: AppService, useValue: null }]
     });
 
     fixture = TestBed.createComponent(SearchComponent);

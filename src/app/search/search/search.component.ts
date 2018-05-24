@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
-import { PhotoService } from '../photo.service';
+import { AppService } from '../../app.service';
 
 @Component({
   selector: 'app-search',
@@ -21,7 +21,7 @@ export class SearchComponent {
   isSearchInProgress: boolean;
   isErrorCaught: boolean;
 
-  constructor(private photoService: PhotoService) { }
+  constructor(private appService: AppService) { }
 
   trimSearchText() {
     this.searchText = this.searchTextFormControl.value.trim();
@@ -30,7 +30,7 @@ export class SearchComponent {
   searchPhotos() {
     this.setStartSearchValues();
 
-    this.photoService.getPhotosBySearchText(this.searchText)
+    this.appService.getPhotosBySearchText(this.searchText)
       .subscribe(
         response => this.handleResponseOnSuccess(response),
         error => this.handleResponseOnError()

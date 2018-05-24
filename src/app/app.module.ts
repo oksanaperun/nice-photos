@@ -1,34 +1,16 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
-import { MatButtonModule, MatGridListModule, MatInputModule, MatProgressSpinnerModule } from '@angular/material';
 import { AppComponent } from './app.component';
-import { SearchComponent } from './search/search.component';
-import { SearchResultsComponent } from './search-results/search-results.component';
-import { EmptySearchResultsComponent } from './empty-search-results/empty-search-results.component';
-import { PhotoService } from './photo.service';
+import { SearchModule } from './search/search.module';
+import { AppService } from './app.service';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    SearchComponent,
-    SearchResultsComponent,
-    EmptySearchResultsComponent
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
-    FormsModule,
-    HttpClientModule,
-    MatButtonModule,
-    MatGridListModule,
-    MatInputModule,
-    MatProgressSpinnerModule,
-    NoopAnimationsModule,
-    ReactiveFormsModule
+    SearchModule
   ],
-  providers: [PhotoService],
+  providers: [AppService],
   bootstrap: [AppComponent]
 })
 

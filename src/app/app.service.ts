@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-
 import { clientId } from '../config';
 
 @Injectable()
-export class PhotoService {
+export class AppService {
   readonly API_URL = 'https://api.unsplash.com';
 
   constructor(private http: HttpClient) { }
