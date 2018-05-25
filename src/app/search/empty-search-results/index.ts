@@ -1,0 +1,1 @@
+export * from './empty-search-results.component';

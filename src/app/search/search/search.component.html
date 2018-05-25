@@ -1,0 +1,28 @@
+<form class="search-form" (ngSubmit)="trimSearchText(); searchPhotos()" #searchForm="ngForm">
+  <button mat-mini-fab color="primary" type="submit" [disabled]="searchTextFormControl.invalid">
+    <i class="material-icons">search</i>
+  </button>
+
+  <mat-form-field>
+    <input matInput placeholder="Search nice photos" [formControl]="searchTextFormControl"
+           [errorStateMatcher]="matcher">
+    <mat-error *ngIf="searchTextFormControl.hasError('required')">
+      Search text is <strong>required</strong>
+    </mat-error>
+    <mat-error *ngIf="searchTextFormControl.hasError('pattern')">
+      Special characters or just spaces are <strong>not allowed</strong>
+    </mat-error>
+  </mat-form-field>
+</form>
+
+<h3 *ngIf="isErrorCaught">Sorry, we can't process your search request right now. Please, try again later</h3>
+
+<app-empty-search-results [searchText]="searchText"
+                          *ngIf="totalPhotosCount == 0 && !isSearchInProgress">
+</app-empty-search-results>
+
+<app-search-results [isSearchInProgress]="isSearchInProgress" [photos]="photos"
+                    [totalPhotosCount]="totalPhotosCount">
+</app-search-results>
+
+<mat-spinner diameter="75" *ngIf="isSearchInProgress"></mat-spinner>

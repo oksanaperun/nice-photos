@@ -1,29 +1,16 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
-import { MatButtonModule, MatGridListModule, MatInputModule } from '@angular/material';
-
 import { AppComponent } from './app.component';
-import { SearchComponent } from './search/search.component';
-import { PhotoService } from './photo.service';
+import { SearchModule } from './search';
+import { AppService } from './app.service';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    SearchComponent
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
-    FormsModule,
-    HttpClientModule,
-    MatButtonModule,
-    MatGridListModule,
-    MatInputModule,
-    NoopAnimationsModule
+    SearchModule
   ],
-  providers: [PhotoService],
+  providers: [AppService],
   bootstrap: [AppComponent]
 })
 
