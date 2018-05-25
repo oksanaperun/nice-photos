@@ -21,8 +21,8 @@
                           *ngIf="totalPhotosCount == 0 && !isSearchInProgress">
 </app-empty-search-results>
 
-<app-search-results [isSearchInProgress]="isSearchInProgress" [photos]="photos"
-                    [totalPhotosCount]="totalPhotosCount">
+<app-search-results [isSearchInProgress]="isSearchInProgress" [items]="photos"
+                    [totalCount]="totalPhotosCount">
 </app-search-results>
 
 <mat-spinner diameter="75" *ngIf="isSearchInProgress"></mat-spinner>

@@ -1,0 +1,6 @@
+<img #img [src]="item.smallUrl"
+     (load)="setLoadingDone()"
+     (error)="setLoadingError(); hideImage(img)">
+
+<span *ngIf="isLoadingInProgress" i18n>Loading...</span>
+<span *ngIf="isLoadingError" i18n>Photo can't be loaded</span>
