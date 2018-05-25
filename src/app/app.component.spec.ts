@@ -1,6 +1,6 @@
 import { TestBed, async } from '@angular/core/testing';
 import { AppComponent } from './app.component';
-import { SearchModule } from './search/search.module';
+import { SearchModule } from './search';
 import { AppService } from './app.service';
 
 describe('AppComponent', () => {

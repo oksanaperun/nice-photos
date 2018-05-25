@@ -4,9 +4,9 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { MatButtonModule, MatGridListModule, MatInputModule, MatProgressSpinnerModule } from '@angular/material';
-import { SearchComponent } from './search//search.component';
-import { SearchResultsComponent } from './search-results/search-results.component';
-import { EmptySearchResultsComponent } from './empty-search-results/empty-search-results.component';
+import { SearchComponent } from './search';
+import { SearchResultsComponent } from './search-results';
+import { EmptySearchResultsComponent } from './empty-search-results';
 
 @NgModule({
   declarations: [
@@ -23,12 +23,9 @@ import { EmptySearchResultsComponent } from './empty-search-results/empty-search
     MatInputModule,
     MatProgressSpinnerModule,
     NoopAnimationsModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule
   ],
-  exports: [
-    SearchComponent
-  ],
-  providers: []
+  exports: [SearchComponent]
 })
 
 export class SearchModule { }
