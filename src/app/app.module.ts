@@ -8,7 +8,7 @@ import { AppService } from './app.service';
   declarations: [AppComponent],
   imports: [
     BrowserModule,
-    SearchModule
+    SearchModule,
   ],
   providers: [AppService],
   bootstrap: [AppComponent]

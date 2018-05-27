@@ -18,7 +18,7 @@ import { EmptySearchResultsComponent } from './empty-search-results';
     SearchResultsItemComponent,
     SearchResultsItemListComponent,
     SearchResultsTotalCountComponent,
-    EmptySearchResultsComponent
+    EmptySearchResultsComponent,
   ],
   imports: [
     CommonModule,
@@ -29,7 +29,7 @@ import { EmptySearchResultsComponent } from './empty-search-results';
     MatInputModule,
     MatProgressSpinnerModule,
     NoopAnimationsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   exports: [SearchComponent]
 })
