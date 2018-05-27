@@ -1,9 +1,10 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
   selector: 'app-search-results-item-list',
   templateUrl: './search-results-item-list.component.html',
-  styles: ['mat-grid-list {width: 90%; left: 5%;}']
+  styleUrls: ['./search-results-item-list.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class SearchResultsItemListComponent {

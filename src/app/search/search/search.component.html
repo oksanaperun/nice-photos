@@ -21,7 +21,7 @@
                           *ngIf="totalPhotosCount == 0 && !isSearchInProgress">
 </app-empty-search-results>
 
-<app-search-results [isSearchInProgress]="isSearchInProgress" [items]="photos"
+<app-search-results *ngIf="!isSearchInProgress" [items]="photos"
                     [totalCount]="totalPhotosCount">
 </app-search-results>
 

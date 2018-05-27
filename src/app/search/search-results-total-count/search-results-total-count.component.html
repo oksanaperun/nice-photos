@@ -1,1 +1,1 @@
-<h5 *ngIf="totalCount > 0" i18n>{{totalCount}} photo(s) found</h5>
+<h5 *ngIf="showTotalCount" i18n>{{totalCount}} {totalCount, plural, =1 {photo} other {photos}} found</h5>
