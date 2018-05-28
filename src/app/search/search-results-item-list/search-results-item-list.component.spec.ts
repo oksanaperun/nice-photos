@@ -1,11 +1,9 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { By } from '@angular/platform-browser';
 import { MatGridListModule } from '@angular/material';
 import { SearchResultsItemListComponent } from './search-results-item-list.component';
 
 describe('SearchResultsItemListComponent', () => {
-  const photoWithValidImage = { smallUrl: 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==' };
   let component: SearchResultsItemListComponent;
   let fixture: ComponentFixture<SearchResultsItemListComponent>;
 
@@ -20,12 +18,10 @@ describe('SearchResultsItemListComponent', () => {
     component = fixture.componentInstance;
   });
 
-  it('should render photo tiles', () => {
-    component.items = [photoWithValidImage, photoWithValidImage, photoWithValidImage];
+  it('should be rendered correctly', () => {
+    component.items = [1, 2, 3];
     fixture.detectChanges();
 
-    const debugElems = fixture.debugElement.queryAll(By.css('mat-grid-tile'));
-
-    expect(debugElems.length).toBe(component.items.length);
+    expect(fixture).toMatchSnapshot();
   });
 });

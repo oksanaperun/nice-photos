@@ -1,0 +1,67 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SearchResultsItemListComponent should be rendered correctly 1`] = `
+<app-search-results-item-list
+  items={[Function Array]}
+>
+  <mat-grid-list
+    class="mat-grid-list"
+    cols="3"
+    guttersize="15px"
+    ng-reflect-cols="3"
+    ng-reflect-gutter-size="15px"
+    ng-reflect-row-height="15em"
+    rowheight="15em"
+  >
+    <div>
+      
+    
+      
+      <mat-grid-tile
+        class="mat-grid-tile"
+        style="left: 0px; top: 0px;"
+      >
+        <figure
+          class="mat-figure"
+        >
+          
+      
+          <app-search-results-item />
+          
+    
+        </figure>
+      </mat-grid-tile>
+      <mat-grid-tile
+        class="mat-grid-tile"
+        style="top: 0px;"
+      >
+        <figure
+          class="mat-figure"
+        >
+          
+      
+          <app-search-results-item />
+          
+    
+        </figure>
+      </mat-grid-tile>
+      <mat-grid-tile
+        class="mat-grid-tile"
+        style="top: 0px;"
+      >
+        <figure
+          class="mat-figure"
+        >
+          
+      
+          <app-search-results-item />
+          
+    
+        </figure>
+      </mat-grid-tile>
+      
+  
+    </div>
+  </mat-grid-list>
+</app-search-results-item-list>
+`;

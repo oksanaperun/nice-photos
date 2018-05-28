@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SearchResultsItemComponent should be rendered correctly when image is not loaded yet 1`] = `
+<app-search-results-item
+  item={[Function Object]}
+>
+  <img
+    src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+  />
+  
+  <span>
+    Loading...
+  </span>
+  
+</app-search-results-item>
+`;
