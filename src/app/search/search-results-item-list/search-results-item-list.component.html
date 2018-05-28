@@ -1,0 +1,5 @@
+<mat-grid-list cols="3" gutterSize="15px" rowHeight="15em">
+  <mat-grid-tile *ngFor="let item of items">
+    <app-search-results-item [item]="item"></app-search-results-item>
+  </mat-grid-tile>
+</mat-grid-list>

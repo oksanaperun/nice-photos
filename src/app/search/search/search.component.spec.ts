@@ -1,10 +1,8 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatButtonModule, MatGridListModule, MatInputModule, MatProgressSpinnerModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { SearchComponent } from './search.component';
-import { SearchResultsComponent } from '../search-results/search-results.component';
-import { EmptySearchResultsComponent } from '../empty-search-results/empty-search-results.component';
 import { AppService } from '../../app.service';
 
 describe('SearchComponent', () => {
@@ -13,21 +11,14 @@ describe('SearchComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [
-        SearchComponent,
-        SearchResultsComponent,
-        EmptySearchResultsComponent
-      ],
+      declarations: [SearchComponent],
       imports: [
         FormsModule,
-        MatButtonModule,
-        MatGridListModule,
-        MatInputModule,
-        MatProgressSpinnerModule,
         NoopAnimationsModule,
         ReactiveFormsModule
       ],
-      providers: [{ provide: AppService, useValue: null }]
+      providers: [{ provide: AppService, useValue: null }],
+      schemas: [NO_ERRORS_SCHEMA]
     });
 
     fixture = TestBed.createComponent(SearchComponent);

@@ -1,0 +1,17 @@
+img {
+  opacity: 0;
+}
+
+img.loaded {
+  opacity: 1;
+  transition: opacity 0.6s ease;
+}
+
+img.hidden {
+  display: none;
+}
+
+span {
+  font-family: 'Nunito', serif;
+  color: rgba(0, 0, 0, 0.5);
+}
