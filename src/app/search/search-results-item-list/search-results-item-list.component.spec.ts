@@ -1,6 +1,5 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { MatGridListModule } from '@angular/material';
 import { SearchResultsItemListComponent } from './search-results-item-list.component';
 
 describe('SearchResultsItemListComponent', () => {
@@ -10,18 +9,16 @@ describe('SearchResultsItemListComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [SearchResultsItemListComponent],
-      imports: [MatGridListModule],
-      schemas: [NO_ERRORS_SCHEMA]
-    });
+      schemas: [NO_ERRORS_SCHEMA],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(SearchResultsItemListComponent);
     component = fixture.componentInstance;
-  });
-
-  it('should be rendered correctly', () => {
     component.items = [1, 2, 3];
     fixture.detectChanges();
+  });
 
+  it('should render items list', () => {
     expect(fixture).toMatchSnapshot();
   });
 });
