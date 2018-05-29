@@ -1,16 +1,53 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`SearchResultsItemComponent should be rendered correctly when image is not loaded yet 1`] = `
+exports[`SearchResultsItemComponent should notify that image is loading 1`] = `
 <app-search-results-item
+  isLoaded="false"
+  isLoadingFailed="false"
   item={[Function Object]}
 >
   <img
-    src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+    class="hidden"
+    src="some-url"
   />
   
   <span>
     Loading...
   </span>
+  
+</app-search-results-item>
+`;
+
+exports[`SearchResultsItemComponent should notify that image loading is failed 1`] = `
+<app-search-results-item
+  isLoaded="false"
+  isLoadingFailed={[Function Boolean]}
+  item={[Function Object]}
+>
+  <img
+    class="hidden"
+    src="some-url"
+  />
+  
+  
+  <span>
+    Photo can't be loaded
+  </span>
+</app-search-results-item>
+`;
+
+exports[`SearchResultsItemComponent should render image 1`] = `
+<app-search-results-item
+  isLoaded={[Function Boolean]}
+  isLoadingFailed="false"
+  item={[Function Object]}
+>
+  <img
+    class=""
+    src="some-url"
+  />
+  
+  
   
 </app-search-results-item>
 `;
