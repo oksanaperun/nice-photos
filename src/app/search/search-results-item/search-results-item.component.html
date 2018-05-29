@@ -1,8 +1,7 @@
 <img [src]="item.smallUrl"
-     [class.loaded]="item.isLoaded"
-     [class.hidden]="item.isLoadingFailed"
+     [class.hidden]="!isLoaded"
      (load)="onLoaded()"
      (error)="onLoadingFailed()">
 
 <span *ngIf="isLoading" i18n>Loading...</span>
-<span *ngIf="item.isLoadingFailed" i18n>Photo can't be loaded</span>
+<span *ngIf="isLoadingFailed" i18n>Photo can't be loaded</span>
