@@ -6,7 +6,7 @@
     "ng": "ng",
     "start": "ng serve -o",
     "build": "ng build --prod",
-    "test": "jest --watch",
+    "test": "jest --watchAll",
     "lint": "ng lint"
   },
   "private": true,
