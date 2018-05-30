@@ -9,8 +9,4 @@ import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 
 export class SearchResultsTotalCountComponent {
   @Input() totalCount: number;
-
-  get showTotalCount(): boolean {
-    return this.totalCount > 0;
-  }
 }

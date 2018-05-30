@@ -1,2 +1,5 @@
-<app-search-results-total-count [totalCount]="totalCount"></app-search-results-total-count>
-<app-search-results-item-list [items]="items"></app-search-results-item-list>
+<app-search-results-total-count [totalCount]="data.totalCount"></app-search-results-total-count>
+<app-search-tips *ngIf="showTips; else itemList"></app-search-tips>
+<ng-template #itemList>
+  <app-search-results-item-list [items]="data.items"></app-search-results-item-list>
+</ng-template>

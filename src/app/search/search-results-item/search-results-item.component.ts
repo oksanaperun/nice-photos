@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Photo } from '../search';
 
 @Component({
   selector: 'app-search-results-item',
@@ -7,7 +8,7 @@ import { Component, Input } from '@angular/core';
 })
 
 export class SearchResultsItemComponent {
-  @Input() item; // TODO: add type after search component refactoring
+  @Input() item: Photo;
 
   get isLoading(): boolean {
     return !this.item.isLoaded && !this.item.isLoadingFailed;

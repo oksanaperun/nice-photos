@@ -1,11 +1,16 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+import { SearchResultsData } from '../search';
 
 @Component({
   selector: 'app-search-results',
   templateUrl: './search-results.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
 export class SearchResultsComponent {
-  @Input() items; // TODO: add type after search component refactoring
-  @Input() totalCount: number;
+  @Input() data: SearchResultsData;
+
+  get showTips(): boolean {
+    return this.data.totalCount === 0;
+  }
 }

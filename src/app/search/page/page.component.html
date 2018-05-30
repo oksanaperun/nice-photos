@@ -1,0 +1,4 @@
+<app-search #search></app-search>
+<app-search-error *ngIf="showError"></app-search-error>
+<app-search-spinner *ngIf="showSpinner"></app-search-spinner>
+<app-search-results *ngIf="showResults" [data]="search.searchResultsData"></app-search-results>

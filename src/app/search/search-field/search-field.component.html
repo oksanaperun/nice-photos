@@ -1,0 +1,10 @@
+<mat-form-field>
+  <input matInput placeholder="Search nice photos" [formControl]="searchInput"
+         [errorStateMatcher]="matcher">
+  <mat-error *ngIf="searchInput.hasError('required')">
+    Search text is <strong>required</strong>
+  </mat-error>
+  <mat-error *ngIf="searchInput.hasError('pattern')">
+    Special characters or just spaces are <strong>not allowed</strong>
+  </mat-error>
+</mat-form-field>

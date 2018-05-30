@@ -1,4 +1,5 @@
 import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Photo } from '../search';
 
 @Component({
   selector: 'app-search-results-item-list',
@@ -8,5 +9,5 @@ import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 })
 
 export class SearchResultsItemListComponent {
-  @Input() items; // TODO: add type after search component refactoring
+  @Input() items: Photo[];
 }

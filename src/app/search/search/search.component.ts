@@ -1,36 +1,25 @@
-import { Component } from '@angular/core';
-import { FormControl, NgForm, Validators } from '@angular/forms';
-import { ErrorStateMatcher } from '@angular/material/core';
-import { AppService } from '../../app.service';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { AppService, SearchResponse, SearchResponseResult } from '../../app.service';
 
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
 export class SearchComponent {
-  searchTextFormControl = new FormControl('', [
-    Validators.required,
-    Validators.pattern('((?=.*[a-zA-Z])|(?=.*[0-9]))[a-zA-Z0-9 ]+')
-  ]);
-  matcher = new SearchTextErrorStateMatcher();
-  searchText: string;
-  photos: any[];
-  totalPhotosCount: number;
-  isSearchInProgress: boolean;
+  searchResultsData: SearchResultsData;
+  isSearchStarted: boolean;
+  isSearchFinished: boolean;
   isErrorCaught: boolean;
 
   constructor(private appService: AppService) { }
 
-  trimSearchText() {
-    this.searchText = this.searchTextFormControl.value.trim();
-  }
-
-  searchPhotos() {
+  searchPhotos(searchText) {
     this.setStartSearchValues();
 
-    this.appService.getPhotosBySearchText(this.searchText)
+    this.appService.searchPhotosBySearchText(searchText)
       .subscribe(
         response => this.handleResponseOnSuccess(response),
         error => this.handleResponseOnError()
@@ -38,35 +27,46 @@ export class SearchComponent {
   }
 
   setStartSearchValues() {
-    this.isSearchInProgress = true;
+    this.isSearchStarted = true;
+    this.isSearchFinished = false;
     this.isErrorCaught = false;
   }
 
   handleResponseOnSuccess(response) {
-    this.isSearchInProgress = false;
-    this.totalPhotosCount = response.total;
-    this.setPhotos(response.results);
+    this.isSearchStarted = false;
+    this.isSearchFinished = true;
+    this.searchResultsData = this.transformSearchResponse(response);
   }
 
   handleResponseOnError() {
-    this.isSearchInProgress = false;
+    this.isSearchStarted = false;
+    this.isSearchFinished = true;
     this.isErrorCaught = true;
   }
 
-  setPhotos(responseResults) {
-    this.photos = responseResults.map(result => {
+  transformSearchResponse(response: SearchResponse): SearchResultsData {
+    return {
+      totalCount: response.total,
+      items: this.transformSearchResponseResults(response.results)
+    };
+  }
+
+  transformSearchResponseResults(results: SearchResponseResult[]): Photo[] {
+    return results.map(result => {
       return {
         id: result.id,
         smallUrl: result.urls.small
-      };
+      }
     });
   }
 }
 
-export class SearchTextErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(control: FormControl | null, form: NgForm | null): boolean {
-    const isSubmitted = form && form.submitted;
+export interface SearchResultsData {
+  totalCount: number;
+  items: Photo[];
+}
 
-    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
-  }
+export interface Photo {
+  id: string;
+  smallUrl: string;
 }

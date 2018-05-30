@@ -8,16 +8,31 @@ import { environment } from '../environments/environment';
 export class AppService {
   constructor(private http: HttpClient) { }
 
-  getPhotosBySearchText(searchText): Observable<any> {
+  searchPhotosBySearchText(searchText): Observable<SearchResponse> {
     const header = new HttpHeaders().set('Accept-Version', 'v1');
     let params = new HttpParams().set('query', searchText);
     params = params.append('client_id', clientId);
     params = params.append('per_page', '9');
     params = params.append('orientation', 'landscape');
 
-    return this.http.get<any>(`${environment.apiBase}/search/photos`, {
+    return this.http.get<SearchResponse>(`${environment.apiBase}/search/photos`, {
       headers: header,
       params: params
     });
   }
+}
+
+export interface SearchResponse {
+  total: number;
+  results: SearchResponseResult[];
+}
+
+export interface SearchResponseResult {
+  id: string;
+  urls: SearchResponseResultUrls;
+}
+
+export interface SearchResponseResultUrls {
+  small: string;
+  regular: string;
 }
