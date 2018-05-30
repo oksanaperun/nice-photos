@@ -10,15 +10,18 @@ import { Photo } from '../search';
 export class SearchResultsItemComponent {
   @Input() item: Photo;
 
+  isLoaded = false;
+  isLoadingFailed = false;
+
   get isLoading(): boolean {
-    return !this.item.isLoaded && !this.item.isLoadingFailed;
+    return !this.isLoaded && !this.isLoadingFailed;
   }
 
   onLoaded(): void {
-    this.item.isLoaded = true;
+    this.isLoaded = true;
   }
 
   onLoadingFailed(): void {
-    this.item.isLoadingFailed = true;
+    this.isLoadingFailed = true;
   }
 }

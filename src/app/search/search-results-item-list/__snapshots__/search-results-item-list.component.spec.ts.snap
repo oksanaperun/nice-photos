@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SearchResultsItemListComponent should render items list 1`] = `
+<app-search-results-item-list
+  items={[Function Array]}
+>
+  <mat-grid-list
+    cols="3"
+    guttersize="15px"
+    rowheight="15em"
+  >
+    
+    
+    
+    <mat-grid-tile>
+      
+      
+      <app-search-results-item />
+      
+    
+    </mat-grid-tile>
+    <mat-grid-tile>
+      
+      
+      <app-search-results-item />
+      
+    
+    </mat-grid-tile>
+    <mat-grid-tile>
+      
+      
+      <app-search-results-item />
+      
+    
+    </mat-grid-tile>
+    
+  
+  </mat-grid-list>
+</app-search-results-item-list>
+`;

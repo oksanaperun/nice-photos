@@ -1,5 +1,4 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
 import { SearchResultsTotalCountComponent } from './search-results-total-count.component';
 
 describe('SearchResultsTotalCountComponent', () => {
@@ -15,12 +14,17 @@ describe('SearchResultsTotalCountComponent', () => {
     component = fixture.componentInstance;
   });
 
-  it('should render total items count', () => {
+  it('should be rendered correctly when total items count equals 1', () => {
+    component.totalCount = 1;
+    fixture.detectChanges();
+
+    expect(fixture).toMatchSnapshot();
+  });
+
+  it('should be rendered correctly when total items count is greater than 1', () => {
     component.totalCount = 10;
     fixture.detectChanges();
 
-    const debugElem = fixture.debugElement.query(By.css('h5'));
-
-    expect(debugElem.nativeElement.innerText).toContain(component.totalCount.toString());
+    expect(fixture).toMatchSnapshot();
   });
 });

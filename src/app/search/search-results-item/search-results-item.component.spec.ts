@@ -1,74 +1,54 @@
-import { TestBed, ComponentFixture, async } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { TestBed, ComponentFixture, async } from '@angular/core/testing';
 import { SearchResultsItemComponent } from './search-results-item.component';
 
 describe('SearchResultsItemComponent', () => {
-  const photoWithValidImage = { smallUrl: 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==' };
-  const photoWithInvalidImage = { smallUrl: 'data:image/jpeg;base64,' };
   let component: SearchResultsItemComponent;
   let fixture: ComponentFixture<SearchResultsItemComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [SearchResultsItemComponent]
-    });
+    }).compileComponents();
 
     fixture = TestBed.createComponent(SearchResultsItemComponent);
     component = fixture.componentInstance;
+    component.item = {id: 'some', smallUrl: 'some-url'};
+
+    fixture.detectChanges();
   });
 
-  it('should show loading text when image is not loaded yet', () => {
-    component.item = photoWithValidImage;
+  it('should render image', () => {
+    component.isLoaded = true;
     fixture.detectChanges();
 
-    const debugElem = fixture.debugElement.query(By.css('span'));
-
-    expect(debugElem.nativeElement.innerText).toBe('Loading...');
+    expect(fixture).toMatchSnapshot();
   });
 
-  it('should hide span element when image has loaded', async(() => {
-    component.item = photoWithValidImage;
+  it('should NOT display image when image is loading', () => {
+    component.isLoaded = false;
     fixture.detectChanges();
 
-    const debugElem = fixture.debugElement.query(By.css('img'));
-    const elem = debugElem.nativeElement;
+    expect(fixture.debugElement.query(By.css('img.hidden')))
+      .toBeTruthy();
+  });
 
-    elem.onload = () => {
-      fixture.detectChanges();
-
-      const debugElems = fixture.debugElement.queryAll(By.css('span'));
-
-      expect(debugElems.length).toBe(0);
-    };
-  }));
-
-  it('should hide image when image can not be loaded', async(() => {
-    component.item = photoWithInvalidImage;
+  it('should NOT display image when image loading is failed', () => {
+    component.isLoadingFailed = true;
     fixture.detectChanges();
 
-    const debugElem = fixture.debugElement.query(By.css('img'));
-    const elem = debugElem.nativeElement;
+    expect(fixture.debugElement.query(By.css('img.hidden')))
+      .toBeTruthy();
+  });
 
-    elem.onerror = () => {
-      fixture.detectChanges();
+  it('should notify that image is loading', () => {
+    expect(fixture).toMatchSnapshot();
+  });
 
-      expect(elem.style.display).toBe('none');
-    };
-  }));
-
-  it('should show loading error text when image can not be loaded', async(() => {
-    component.item = photoWithInvalidImage;
+  it('should notify that image loading is failed', () => {
+    component.isLoadingFailed = true;
     fixture.detectChanges();
 
-    const debugElem = fixture.debugElement.query(By.css('img'));
-    const elem = debugElem.nativeElement;
-
-    elem.onerror = () => {
-      fixture.detectChanges();
-
-      const debugElem = fixture.debugElement.query(By.css('span'));
-
-      expect(debugElem.nativeElement.innerText).toBe('Photo can\'t be loaded');
-    };
-  }));
+    expect(fixture).toMatchSnapshot();
+  });
 });
