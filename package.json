@@ -5,7 +5,8 @@
   "scripts": {
     "ng": "ng",
     "config": "ts-node ./set-env.ts",
-    "start": "npm run config && ng serve -o",
+    "start": "npm run config && ng serve",
+    "start:open": "npm run start -- -o",
     "build": "npm run config && ng build",
     "test": "jest",
     "test:watch": "npm run test -- --watchAll",
