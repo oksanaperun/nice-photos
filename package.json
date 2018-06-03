@@ -4,9 +4,10 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve -o",
-    "build": "ng build --prod",
-    "test": "jest --watch",
+    "config": "ts-node ./set-env.ts",
+    "start": "npm run config && ng serve -o",
+    "build": "npm run config && ng build",
+    "test": "jest --watchAll",
     "lint": "ng lint"
   },
   "private": true,
@@ -23,6 +24,7 @@
     "@angular/platform-browser-dynamic": "^5.2.0",
     "@angular/router": "^5.2.0",
     "core-js": "^2.4.1",
+    "dotenv": "^5.0.1",
     "rxjs": "^5.5.6",
     "zone.js": "^0.8.19"
   },
