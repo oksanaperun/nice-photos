@@ -7,7 +7,8 @@
     "config": "ts-node ./set-env.ts",
     "start": "npm run config && ng serve -o",
     "build": "npm run config && ng build",
-    "test": "jest --watchAll",
+    "test": "jest",
+    "test:watch": "npm run test -- --watchAll",
     "lint": "ng lint"
   },
   "private": true,
