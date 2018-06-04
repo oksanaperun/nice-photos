@@ -7,17 +7,17 @@ import { SearchComponent } from '../search';
 })
 
 export class PageComponent {
-  @ViewChild(SearchComponent) searchComponent: SearchComponent;
+  @ViewChild('search') searchComponent: SearchComponent;
 
-  get showError(): boolean {
-    return this.searchComponent.isErrorCaught;
+  get isSpinner(): boolean {
+    return this.searchComponent.isSearchStarted && !this.searchComponent.isSearchFinished;
   }
 
-  get showSpinner(): boolean {
-    return this.searchComponent.isSearchStarted;
+  get isResultsDataReady(): boolean {
+    return this.searchComponent.isSearchFinished && !this.searchComponent.isError;
   }
 
-  get showResults(): boolean {
-    return this.searchComponent.isSearchFinished && !this.searchComponent.isErrorCaught;
+  get isError(): boolean {
+    return this.searchComponent.isSearchFinished && this.searchComponent.isError;
   }
 }

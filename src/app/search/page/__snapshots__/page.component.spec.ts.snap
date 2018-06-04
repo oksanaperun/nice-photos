@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PageComponent should be rendered correctly by default 1`] = `
+<app-page
+  searchComponent={[Function SearchComponent]}
+>
+  <app-search />
+  
+  
+  
+  
+</app-page>
+`;
+
+exports[`PageComponent should be rendered correctly when search finished 1`] = `
+<app-page
+  searchComponent={[Function SearchComponent]}
+>
+  <app-search />
+  
+  <app-search-results />
+  
+  
+</app-page>
+`;
+
+exports[`PageComponent should be rendered correctly when search finished with error 1`] = `
+<app-page
+  searchComponent={[Function SearchComponent]}
+>
+  <app-search />
+  
+  
+  <app-search-error />
+  
+</app-page>
+`;
+
+exports[`PageComponent should be rendered correctly when search started 1`] = `
+<app-page
+  searchComponent={[Function SearchComponent]}
+>
+  <app-search />
+  <app-search-spinner />
+  
+  
+  
+</app-page>
+`;

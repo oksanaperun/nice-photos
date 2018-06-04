@@ -12,12 +12,12 @@ export class SearchComponent {
   searchResultsData: SearchResultsData;
   isSearchStarted: boolean;
   isSearchFinished: boolean;
-  isErrorCaught: boolean;
+  isError: boolean;
 
   constructor(private appService: AppService) { }
 
   searchPhotos(searchText) {
-    this.setStartSearchValues();
+    this.setValuesOnSearchStart();
 
     this.appService.searchPhotosBySearchText(searchText)
       .subscribe(
@@ -26,22 +26,25 @@ export class SearchComponent {
       );
   }
 
-  setStartSearchValues() {
+  setValuesOnSearchStart() {
     this.isSearchStarted = true;
     this.isSearchFinished = false;
-    this.isErrorCaught = false;
+    this.isError = false;
+  }
+
+  setValuesOnSearchFinish() {
+    this.isSearchStarted = false;
+    this.isSearchFinished = true;
   }
 
   handleResponseOnSuccess(response) {
-    this.isSearchStarted = false;
-    this.isSearchFinished = true;
+    this.setValuesOnSearchFinish();
     this.searchResultsData = this.transformSearchResponse(response);
   }
 
   handleResponseOnError() {
-    this.isSearchStarted = false;
-    this.isSearchFinished = true;
-    this.isErrorCaught = true;
+    this.setValuesOnSearchFinish();
+    this.isError = true;
   }
 
   transformSearchResponse(response: SearchResponse): SearchResultsData {
