@@ -3,15 +3,7 @@ language: node_js
 node_js:
 - '8'
 
-install:
-  - npm install
-
-script:
-  - npm test
-  - npm run build
-
 deploy:
   provider: heroku
   api_key:
     secure: F3laa5YaOvsHNGwoP80ZL2MgnAObMkbh50xxhLYTGjvosEro12q5wUGYrrtmdawLboLVRHOPvolKiROuztdQ4eElc/9LWXcbk53jeN+2XuYrMxF7KPHGeG6up2rJYbkT9BPBP8Ou212KRU1r8/bUiecVuny8QDioD8rEhl0E3OClYHa2bMHHTtOssW4CzKcHLXsBVyir75FEhUgaNafU18CvqRmS4Um3bEHdH9dBu2a0nKBC6tB98r/H+RYgqToIRsmHZOBIrxTTZUTN7sCBPv/2ZtyUAC9ZEByROMPQDrbYNVnPF6iFFatNMPQc4SnITsrcdjgP7UVkt1xL/e5uLld6YEDyI27f9f5S+ERrcoscW7CvWyZbSUVzdEE9Wkgr5TDET1D4g4p5jY73u55xo7PrbwVGN6LpeetEMKzVYrFFWsPE1+kkVWVkYh4XAqXI48hVTKb6Ak05D3GkC1p38kWeSxjsBpaSh6x2akGolaqIfjTXx5Zttv3WJTwB6H3QxeoxGHys+Svx23IlTL1l/1AJTc2gTjebGG7xiZYqCSV/LvCu3QToHI0WhOOeKfQmaaq+wFO9T3NXKES/tR+1XJNNgEC6lUrhHsKxm84+6bB84jvM3Rv6UPRAh/RGepeYBuGH6XWH82FPEkn28aCKA91yHj+NGs/YPxj0SFHPEII=
-  skip_cleanup: true
