@@ -10,8 +10,7 @@
     "build": "npm run config && ng build",
     "test": "npm run config && jest",
     "test:watch": "npm run test -- --watchAll",
-    "lint": "ng lint",
-    "postinstall": "npm run build -- --aot"
+    "lint": "ng lint"
   },
   "private": true,
   "dependencies": {
