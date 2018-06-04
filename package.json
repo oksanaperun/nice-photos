@@ -10,14 +10,17 @@
     "build": "npm run config && ng build",
     "test": "npm run config && jest",
     "test:watch": "npm run test -- --watchAll",
-    "lint": "ng lint"
+    "lint": "ng lint",
+    "postinstall": "npm run build -- --aot"
   },
   "private": true,
   "dependencies": {
     "@angular/animations": "^5.2.9",
     "@angular/cdk": "^5.2.0",
+    "@angular/cli": "~1.7.4",
     "@angular/common": "^5.2.0",
     "@angular/compiler": "^5.2.0",
+    "@angular/compiler-cli": "^5.2.0",
     "@angular/core": "^5.2.0",
     "@angular/forms": "^5.2.0",
     "@angular/http": "^5.2.0",
@@ -28,20 +31,23 @@
     "core-js": "^2.4.1",
     "dotenv": "^5.0.1",
     "rxjs": "^5.5.6",
+    "typescript": "~2.5.3",
     "zone.js": "^0.8.19"
   },
   "devDependencies": {
-    "@angular/cli": "~1.7.4",
-    "@angular/compiler-cli": "^5.2.0",
     "@angular/language-service": "^5.2.0",
     "@types/jest": "^22.2.3",
     "@types/node": "~6.0.60",
     "codelyzer": "^4.0.1",
+    "enhanced-resolve": "^4.0.0",
     "jest": "^23.0.1",
     "jest-preset-angular": "^5.2.2",
     "ts-node": "~4.1.0",
-    "tslint": "~5.9.1",
-    "typescript": "~2.5.3"
+    "tslint": "~5.9.1"
+  },
+  "engines": {
+    "node": "8.11.2",
+    "npm": "5.6.0"
   },
   "jest": {
     "preset": "jest-preset-angular",
