@@ -5,8 +5,8 @@
   "scripts": {
     "ng": "ng",
     "config": "ts-node ./set-env.ts",
-    "start": "npm run config && ng serve",
-    "start:open": "npm run start -- -o",
+    "start": "node server.js",
+    "start:dev": "npm run config && ng serve -o",
     "build": "npm run config && ng build",
     "test": "npm run config && jest",
     "test:watch": "npm run test -- --watchAll",
@@ -30,6 +30,7 @@
     "@angular/router": "^5.2.0",
     "core-js": "^2.4.1",
     "dotenv": "^5.0.1",
+    "express": "^4.16.3",
     "rxjs": "^5.5.6",
     "typescript": "~2.5.3",
     "zone.js": "^0.8.19"
