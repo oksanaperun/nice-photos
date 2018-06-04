@@ -8,7 +8,7 @@
     "start": "npm run config && ng serve",
     "start:open": "npm run start -- -o",
     "build": "npm run config && ng build",
-    "test": "jest",
+    "test": "npm run config && jest",
     "test:watch": "npm run test -- --watchAll",
     "lint": "ng lint"
   },
