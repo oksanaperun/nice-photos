@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-import { clientId } from '../config';
 import { environment } from '../environments/environment';
 
 @Injectable()
@@ -11,7 +10,7 @@ export class AppService {
   searchPhotosBySearchText(searchText): Observable<SearchResponse> {
     const header = new HttpHeaders().set('Accept-Version', 'v1');
     let params = new HttpParams().set('query', searchText);
-    params = params.append('client_id', clientId);
+    params = params.append('client_id', environment.clientId);
     params = params.append('per_page', '9');
     params = params.append('orientation', 'landscape');
 
