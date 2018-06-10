@@ -1,4 +1,5 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
+import { ISubscription } from 'rxjs/Subscription';
 import { AppService, SearchResponse, SearchResponseResult } from '../../app.service';
 
 @Component({
@@ -8,18 +9,23 @@ import { AppService, SearchResponse, SearchResponseResult } from '../../app.serv
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
-export class SearchComponent {
+export class SearchComponent implements OnDestroy {
   searchResultsData: SearchResultsData;
   isSearchStarted: boolean;
   isSearchFinished: boolean;
   isError: boolean;
+  private subscription: ISubscription;
 
   constructor(private appService: AppService) { }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
 
   searchPhotos(searchText) {
     this.setValuesOnSearchStart();
 
-    this.appService.searchPhotosBySearchText(searchText)
+    this.subscription = this.appService.searchPhotosBySearchText(searchText)
       .subscribe(
         response => this.handleResponseOnSuccess(response),
         error => this.handleResponseOnError()
