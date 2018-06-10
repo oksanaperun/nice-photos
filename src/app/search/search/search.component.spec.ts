@@ -7,7 +7,6 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/throw';
 import { SearchComponent, SearchResultsData, Photo } from './search.component';
-import { SearchFieldComponent } from '../search-field';
 import { AppService, SearchResponse, SearchResponseResult } from '../../app.service';
 
 @Component({

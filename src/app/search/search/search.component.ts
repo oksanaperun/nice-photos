@@ -19,7 +19,7 @@ export class SearchComponent implements OnDestroy {
   constructor(private appService: AppService) { }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    if (this.subscription) this.subscription.unsubscribe();
   }
 
   searchPhotos(searchText) {
