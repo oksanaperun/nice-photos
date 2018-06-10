@@ -1,0 +1,128 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SearchFieldComponent should NOT render error when input is valid 1`] = `
+<app-search-field
+  matcher={[Function SearchTextErrorStateMatcher]}
+  searchInput={[Function FormControl]}
+>
+  <mat-form-field>
+    
+    
+    <input
+      matinput=""
+      placeholder="Search nice photos"
+    />
+    
+    
+    
+    
+    
+    
+    
+  
+  </mat-form-field>
+  
+</app-search-field>
+`;
+
+exports[`SearchFieldComponent should render error when input contains only spaces 1`] = `
+<app-search-field
+  matcher={[Function SearchTextErrorStateMatcher]}
+  searchInput={[Function FormControl]}
+>
+  <mat-form-field>
+    
+    
+    <input
+      matinput=""
+      placeholder="Search nice photos"
+    />
+    
+    
+    
+    
+    
+    
+    <mat-error>
+      
+      Special characters or just spaces are 
+      <strong>
+        not allowed
+      </strong>
+      
+    
+    </mat-error>
+    
+  
+  </mat-form-field>
+  
+</app-search-field>
+`;
+
+exports[`SearchFieldComponent should render error when input contains special character 1`] = `
+<app-search-field
+  matcher={[Function SearchTextErrorStateMatcher]}
+  searchInput={[Function FormControl]}
+>
+  <mat-form-field>
+    
+    
+    <input
+      matinput=""
+      placeholder="Search nice photos"
+    />
+    
+    
+    
+    
+    
+    
+    <mat-error>
+      
+      Special characters or just spaces are 
+      <strong>
+        not allowed
+      </strong>
+      
+    
+    </mat-error>
+    
+  
+  </mat-form-field>
+  
+</app-search-field>
+`;
+
+exports[`SearchFieldComponent should render error when input is empty 1`] = `
+<app-search-field
+  matcher={[Function SearchTextErrorStateMatcher]}
+  searchInput={[Function FormControl]}
+>
+  <mat-form-field>
+    
+    
+    <input
+      matinput=""
+      placeholder="Search nice photos"
+    />
+    
+    
+    
+    <mat-error>
+      
+      Search text is 
+      <strong>
+        required
+      </strong>
+      
+    
+    </mat-error>
+    
+    
+    
+    
+  
+  </mat-form-field>
+  
+</app-search-field>
+`;

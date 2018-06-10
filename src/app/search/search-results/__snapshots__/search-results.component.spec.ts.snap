@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SearchResultsComponent should be rendered correctly when total items count equals zero 1`] = `
+<app-search-results
+  data={[Function Object]}
+>
+  <app-search-results-total-count
+    ng-reflect-total-count="0"
+  />
+  <app-search-tips />
+  
+  
+</app-search-results>
+`;
+
+exports[`SearchResultsComponent should be rendered correctly when total items count is greater than zero 1`] = `
+<app-search-results
+  data={[Function Object]}
+>
+  <app-search-results-total-count
+    ng-reflect-total-count="2"
+  />
+  
+    <app-search-results-item-list />
+  
+  
+  
+</app-search-results>
+`;

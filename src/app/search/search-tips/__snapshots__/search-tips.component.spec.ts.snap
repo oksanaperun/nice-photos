@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SearchTipsComponent should render tips 1`] = `
+<app-search-tips
+  searchTips={[Function Array]}
+>
+  <div
+    class="search-tips"
+  >
+    
+    
+    <h4>
+      Search tips:
+    </h4>
+    
+    
+    <ul>
+      
+      
+      
+      <li>
+        tip1
+      </li>
+      <li>
+        tip2
+      </li>
+      
+    
+    </ul>
+    
+  
+  </div>
+  
+</app-search-tips>
+`;
