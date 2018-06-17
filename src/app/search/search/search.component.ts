@@ -64,6 +64,9 @@ export class SearchComponent implements OnDestroy {
     return results.map(result => {
       return {
         id: result.id,
+        height: result.height,
+        width: result.width,
+        color: result.color,
         smallUrl: result.urls.small
       }
     });
@@ -77,5 +80,8 @@ export interface SearchResultsData {
 
 export interface Photo {
   id: string;
+  height: number;
+  width: number;
+  color: string;
   smallUrl: string;
 }

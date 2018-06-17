@@ -28,6 +28,9 @@ export interface SearchResponse {
 
 export interface SearchResponseResult {
   id: string;
+  height: number;
+  width: number;
+  color: string;
   urls: SearchResponseResultUrls;
 }
 

@@ -1,9 +1,4 @@
-.hidden {
-  display: none;
+.loaded {
+  opacity: 1;
   transition: opacity 0.6s ease;
-}
-
-span {
-  font-family: 'Nunito', serif;
-  color: rgba(0, 0, 0, 0.5);
 }

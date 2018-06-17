@@ -13,8 +13,22 @@ export class SearchResultsItemComponent {
   isLoaded = false;
   isLoadingFailed = false;
 
-  get isLoading(): boolean {
-    return !this.isLoaded && !this.isLoadingFailed;
+  loadingFailedPlaceholder = 'assets/loading_failed.png';
+
+  get itemBoxStyle() {
+    if (this.item && (!this.isLoaded || this.isLoadingFailed))
+      return {
+        'background-color': this.item.color
+      };
+  }
+
+  get itemStyle() {
+    if (this.item && !this.isLoaded)
+      return {
+        'height': this.item.height + 'px',
+        'width': this.item.width + 'px',
+        'opacity': 0
+      };
   }
 
   onLoaded(): void {
@@ -23,5 +37,6 @@ export class SearchResultsItemComponent {
 
   onLoadingFailed(): void {
     this.isLoadingFailed = true;
+    this.item.smallUrl = this.loadingFailedPlaceholder;
   }
 }

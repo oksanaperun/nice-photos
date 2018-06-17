@@ -1,7 +1,7 @@
-<img [src]="item.smallUrl"
-     [class.hidden]="!isLoaded"
-     (load)="onLoaded()"
-     (error)="onLoadingFailed()">
-
-<span *ngIf="isLoading" i18n>Loading...</span>
-<span *ngIf="isLoadingFailed" i18n>Photo can't be loaded</span>
+<div [ngStyle]="itemBoxStyle">
+  <img [src]="item.smallUrl"
+       [class.loaded]="isLoaded"
+       [ngStyle]="itemStyle"
+       (load)="onLoaded()"
+       (error)="onLoadingFailed()">
+</div>

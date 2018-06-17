@@ -1,39 +1,51 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`SearchResultsItemComponent should notify that image is loading 1`] = `
+exports[`SearchResultsItemComponent should display placeholder when image is loading 1`] = `
 <app-search-results-item
   isLoaded="false"
   isLoadingFailed="false"
   item={[Function Object]}
+  loadingFailedPlaceholder={[Function String]}
 >
-  <img
-    class="hidden"
-    src="some-url"
-  />
+  <div
+    ng-reflect-ng-style="[object Object]"
+    style="background-color: rgb(173, 212, 221);"
+  >
+    
+    
+    <img
+      ng-reflect-ng-style="[object Object]"
+      src="some-url"
+      style="height: 50px; width: 100px; opacity: 0;"
+    />
+    
   
-  <span>
-    Loading...
-  </span>
-  
+  </div>
   
 </app-search-results-item>
 `;
 
-exports[`SearchResultsItemComponent should notify that image loading is failed 1`] = `
+exports[`SearchResultsItemComponent should display placeholder when image loading is failed 1`] = `
 <app-search-results-item
   isLoaded="false"
   isLoadingFailed={[Function Boolean]}
   item={[Function Object]}
+  loadingFailedPlaceholder={[Function String]}
 >
-  <img
-    class="hidden"
-    src="some-url"
-  />
+  <div
+    ng-reflect-ng-style="[object Object]"
+    style="background-color: rgb(173, 212, 221);"
+  >
+    
+    
+    <img
+      ng-reflect-ng-style="[object Object]"
+      src="assets/loading_failed.png"
+      style="height: 50px; width: 100px; opacity: 0;"
+    />
+    
   
-  
-  <span>
-    Photo can't be loaded
-  </span>
+  </div>
   
 </app-search-results-item>
 `;
@@ -43,14 +55,21 @@ exports[`SearchResultsItemComponent should render image 1`] = `
   isLoaded={[Function Boolean]}
   isLoadingFailed="false"
   item={[Function Object]}
+  loadingFailedPlaceholder={[Function String]}
 >
-  <img
-    class=""
-    src="some-url"
-  />
+  <div
+    style=""
+  >
+    
+    
+    <img
+      class="loaded"
+      src="some-url"
+      style=""
+    />
+    
   
-  
-  
+  </div>
   
 </app-search-results-item>
 `;
