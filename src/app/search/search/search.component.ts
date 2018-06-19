@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, OnDestroy, EventEmitter, Output } from '@angular/core';
 import { ISubscription } from 'rxjs/Subscription';
 import { AppService, SearchResponse, SearchResponseResult, SearchResultsData, Item } from '../../app.service';
 
@@ -10,10 +10,11 @@ import { AppService, SearchResponse, SearchResponseResult, SearchResultsData, It
 })
 
 export class SearchComponent implements OnDestroy {
+  @Output() loading = new EventEmitter<boolean>();
+  @Output() loaded = new EventEmitter<boolean>();
+  @Output() failed = new EventEmitter<boolean>();
+
   searchResultsData: SearchResultsData;
-  isSearchStarted: boolean;
-  isSearchFinished: boolean;
-  isError: boolean;
   private subscription: ISubscription;
 
   constructor(private appService: AppService) { }
@@ -30,24 +31,20 @@ export class SearchComponent implements OnDestroy {
   }
 
   setValuesOnSearchStart() {
-    this.isSearchStarted = true;
-    this.isSearchFinished = false;
-    this.isError = false;
-  }
-
-  setValuesOnSearchFinish() {
-    this.isSearchStarted = false;
-    this.isSearchFinished = true;
+    this.loading.emit(true);
+    this.loaded.emit(false);
+    this.failed.emit(false);
   }
 
   handleResponseOnSuccess(response: SearchResponse) {
-    this.setValuesOnSearchFinish();
+    this.loading.emit(false);
+    this.loaded.emit(true);
     this.searchResultsData = this.transformSearchResponse(response);
   }
 
   handleResponseOnError() {
-    this.setValuesOnSearchFinish();
-    this.isError = true;
+    this.loading.emit(false);
+    this.failed.emit(true);
   }
 
   transformSearchResponse(response: SearchResponse): SearchResultsData {
@@ -58,6 +55,6 @@ export class SearchComponent implements OnDestroy {
   }
 
   transformSearchResponseResults(results: SearchResponseResult[]): Item[] {
-    return results.map(({id, urls})=> ({id: id, smallUrl: urls.small}));
+    return results.map(({ id, urls }) => ({ id: id, smallUrl: urls.small }));
   }
 }

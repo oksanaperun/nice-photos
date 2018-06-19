@@ -1,5 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
-import { SearchComponent } from '../search';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-page',
@@ -7,17 +6,19 @@ import { SearchComponent } from '../search';
 })
 
 export class PageComponent {
-  @ViewChild('search') searchComponent: SearchComponent;
+  isLoading: boolean;
+  isLoaded: boolean;
+  isFailed: boolean;
 
-  get isLoading(): boolean {
-    return this.searchComponent.isSearchStarted && !this.searchComponent.isSearchFinished;
+  onLoading(isLoading: boolean) {
+    this.isLoading = isLoading;
   }
 
-  get isLoaded(): boolean {
-    return this.searchComponent.isSearchFinished && !this.searchComponent.isError;
+  onLoaded(isLoaded: boolean) {
+    this.isLoaded = isLoaded;
   }
 
-  get isError(): boolean {
-    return this.searchComponent.isSearchFinished && this.searchComponent.isError;
+  onFailed(isFailed: boolean) {
+    this.isFailed = isFailed;
   }
 }

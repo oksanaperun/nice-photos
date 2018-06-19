@@ -2,9 +2,12 @@
 
 exports[`PageComponent should render error when search finished with error 1`] = `
 <app-page
-  searchComponent={[Function SearchComponent]}
+  isFailed={[Function Boolean]}
 >
-  <app-search />
+  <app-search>
+    
+  
+  </app-search>
   
   
   <app-search-error />
@@ -13,10 +16,11 @@ exports[`PageComponent should render error when search finished with error 1`] =
 `;
 
 exports[`PageComponent should render only search form by default 1`] = `
-<app-page
-  searchComponent={[Function SearchComponent]}
->
-  <app-search />
+<app-page>
+  <app-search>
+    
+  
+  </app-search>
   
   
   
@@ -26,9 +30,12 @@ exports[`PageComponent should render only search form by default 1`] = `
 
 exports[`PageComponent should render search results when search finished 1`] = `
 <app-page
-  searchComponent={[Function SearchComponent]}
+  isLoaded={[Function Boolean]}
 >
-  <app-search />
+  <app-search>
+    
+  
+  </app-search>
   
   <app-search-results />
   
@@ -38,9 +45,12 @@ exports[`PageComponent should render search results when search finished 1`] = `
 
 exports[`PageComponent should render spinner when search started 1`] = `
 <app-page
-  searchComponent={[Function SearchComponent]}
+  isLoading={[Function Boolean]}
 >
-  <app-search />
+  <app-search>
+    
+  
+  </app-search>
   <app-search-spinner />
   
   

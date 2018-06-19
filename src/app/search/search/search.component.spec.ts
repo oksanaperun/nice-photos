@@ -34,15 +34,20 @@ describe('SearchComponent', () => {
     component = fixture.componentInstance;
   });
 
-  it('should manage correctly started search', () => {
+  it('should emit events on started search', () => {
+    spyOn(component.loading, 'emit');
+    spyOn(component.loaded, 'emit');
+    spyOn(component.failed, 'emit');
+
     appService = fixture.debugElement.injector.get(AppService);
     spyOn(appService, 'searchPhotosBySearchText').and.returnValue(Observable.of(null));
+
     component.handleResponseOnSuccess = jest.fn();
     component.searchPhotos(searchText);
 
-    expect(component.isSearchStarted).toBe(true);
-    expect(component.isSearchFinished).toBe(false);
-    expect(component.isError).toBe(false);
+    expect(component.loading.emit).toHaveBeenCalledWith(true);
+    expect(component.loaded.emit).toHaveBeenCalledWith(false);
+    expect(component.failed.emit).toHaveBeenCalledWith(false);
   });
 
   it('should call AppService with search text', () => {
@@ -54,7 +59,7 @@ describe('SearchComponent', () => {
     expect(appService.searchPhotosBySearchText).toBeCalledWith(searchText);
   });
 
-  it('should manage correctly success call to AppService', () => {
+  it('should emit events and set data on success call to AppService', () => {
     const result: SearchResponseResult = {
       id: 'some-id',
       urls: { small: 'some-url', regular: 'some-url' }
@@ -66,24 +71,34 @@ describe('SearchComponent', () => {
     const response: SearchResponse = { total: 2, results: [result, result] };
     const transformedResponse: SearchResultsData = { totalCount: 2, items: [transformedResult, transformedResult] };
 
+    spyOn(component.loading, 'emit');
+    spyOn(component.loaded, 'emit');
+    spyOn(component.failed, 'emit');
+
     appService = fixture.debugElement.injector.get(AppService);
     spyOn(appService, 'searchPhotosBySearchText').and.returnValue(Observable.of(response));
+
     component.searchPhotos(searchText);
 
-    expect(component.isSearchStarted).toBe(false);
-    expect(component.isSearchFinished).toBe(true);
-    expect(component.isError).toBe(false);
+    expect(component.loading.emit).toHaveBeenCalledWith(false);
+    expect(component.loaded.emit).toHaveBeenCalledWith(true);
+    expect(component.failed.emit).toHaveBeenCalledWith(false);
     expect(component.searchResultsData).toEqual(transformedResponse);
   });
 
-  it('should manage correctly errored call to AppService', () => {
+  it('should emit events on failed call to AppService', () => {
+    spyOn(component.loading, 'emit');
+    spyOn(component.loaded, 'emit');
+    spyOn(component.failed, 'emit');
+
     appService = fixture.debugElement.injector.get(AppService);
     spyOn(appService, 'searchPhotosBySearchText').and.returnValue(Observable.throw({ status: 500 }));
+
     component.searchPhotos(searchText);
 
-    expect(component.isSearchStarted).toBe(false);
-    expect(component.isSearchFinished).toBe(true);
-    expect(component.isError).toBe(true);
+    expect(component.loading.emit).toHaveBeenCalledWith(false);
+    expect(component.loaded.emit).toHaveBeenCalledWith(false);
+    expect(component.failed.emit).toHaveBeenCalledWith(true);
   });
 
   it('should call #searchPhotos with search text on form submit', () => {

@@ -1,4 +1,4 @@
-import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
   selector: 'app-search-tips',
@@ -7,10 +7,4 @@ import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
-export class SearchTipsComponent {
-  searchTips = [
-    'Check your spelling and try again',
-    'Try a similar but different search term',
-    'Be less specific in your wording for a wider search result'
-  ];
-}
+export class SearchTipsComponent { }
