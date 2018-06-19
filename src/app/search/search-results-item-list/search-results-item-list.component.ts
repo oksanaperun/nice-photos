@@ -1,5 +1,5 @@
 import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
-import { Photo } from '../search';
+import { Item } from '../../app.service';
 
 @Component({
   selector: 'app-search-results-item-list',
@@ -9,5 +9,5 @@ import { Photo } from '../search';
 })
 
 export class SearchResultsItemListComponent {
-  @Input() items: Photo[];
+  @Input() items: Item[];
 }

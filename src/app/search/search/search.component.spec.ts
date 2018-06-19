@@ -6,8 +6,8 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/throw';
-import { SearchComponent, SearchResultsData, Photo } from './search.component';
-import { AppService, SearchResponse, SearchResponseResult } from '../../app.service';
+import { SearchComponent } from './search.component';
+import { AppService, SearchResponse, SearchResponseResult, SearchResultsData, Item } from '../../app.service';
 
 @Component({
   selector: 'app-search-field',
@@ -59,7 +59,7 @@ describe('SearchComponent', () => {
       id: 'some-id',
       urls: { small: 'some-url', regular: 'some-url' }
     };
-    const transformedResult: Photo = {
+    const transformedResult: Item = {
       id: result.id,
       smallUrl: result.urls.small
     };

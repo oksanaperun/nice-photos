@@ -35,3 +35,13 @@ export interface SearchResponseResultUrls {
   small: string;
   regular: string;
 }
+
+export interface SearchResultsData {
+  totalCount: number;
+  items: Item[];
+}
+
+export interface Item {
+  id: string;
+  smallUrl: string;
+}

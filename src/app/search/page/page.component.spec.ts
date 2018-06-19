@@ -18,25 +18,25 @@ describe('PageComponent', () => {
     component.searchComponent = new SearchComponent(null);
   });
 
-  it('should be rendered correctly by default', () => {
+  it('should render only search form by default', () => {
     expect(fixture).toMatchSnapshot();
   });
 
-  it('should be rendered correctly when search started', () => {
+  it('should render spinner when search started', () => {
     component.searchComponent.isSearchStarted = true;
     fixture.detectChanges();
 
     expect(fixture).toMatchSnapshot();
   });
 
-  it('should be rendered correctly when search finished', () => {
+  it('should render search results when search finished', () => {
     component.searchComponent.isSearchFinished = true;
     fixture.detectChanges();
 
     expect(fixture).toMatchSnapshot();
   });
 
-  it('should be rendered correctly when search finished with error', () => {
+  it('should render error when search finished with error', () => {
     component.searchComponent.isSearchFinished = true;
     component.searchComponent.isError = true;
     fixture.detectChanges();

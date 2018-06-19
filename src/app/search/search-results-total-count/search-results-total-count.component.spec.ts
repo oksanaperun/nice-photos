@@ -14,21 +14,21 @@ describe('SearchResultsTotalCountComponent', () => {
     component = fixture.componentInstance;
   });
 
-  it('should be rendered correctly when total items count equals zero', () => {
+  it('should render total items count when it equals 0', () => {
     component.totalCount = 0;
     fixture.detectChanges();
 
     expect(fixture).toMatchSnapshot();
   });
 
-  it('should be rendered correctly when total items count equals 1', () => {
+  it('should render total items count when it equals 1', () => {
     component.totalCount = 1;
     fixture.detectChanges();
 
     expect(fixture).toMatchSnapshot();
   });
 
-  it('should be rendered correctly when total items count is greater than 1', () => {
+  it('should render total items count when it is greater than 1', () => {
     component.totalCount = 10;
     fixture.detectChanges();
 

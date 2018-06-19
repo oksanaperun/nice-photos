@@ -1,6 +1,6 @@
 import { Component, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
 import { ISubscription } from 'rxjs/Subscription';
-import { AppService, SearchResponse, SearchResponseResult } from '../../app.service';
+import { AppService, SearchResponse, SearchResponseResult, SearchResultsData, Item } from '../../app.service';
 
 @Component({
   selector: 'app-search',
@@ -22,14 +22,11 @@ export class SearchComponent implements OnDestroy {
     if (this.subscription) this.subscription.unsubscribe();
   }
 
-  searchPhotos(searchText) {
+  searchPhotos(searchText: string) {
     this.setValuesOnSearchStart();
 
     this.subscription = this.appService.searchPhotosBySearchText(searchText)
-      .subscribe(
-        response => this.handleResponseOnSuccess(response),
-        error => this.handleResponseOnError()
-      );
+      .subscribe(this.handleResponseOnSuccess.bind(this), this.handleResponseOnError.bind(this));
   }
 
   setValuesOnSearchStart() {
@@ -43,7 +40,7 @@ export class SearchComponent implements OnDestroy {
     this.isSearchFinished = true;
   }
 
-  handleResponseOnSuccess(response) {
+  handleResponseOnSuccess(response: SearchResponse) {
     this.setValuesOnSearchFinish();
     this.searchResultsData = this.transformSearchResponse(response);
   }
@@ -60,22 +57,7 @@ export class SearchComponent implements OnDestroy {
     };
   }
 
-  transformSearchResponseResults(results: SearchResponseResult[]): Photo[] {
-    return results.map(result => {
-      return {
-        id: result.id,
-        smallUrl: result.urls.small
-      }
-    });
+  transformSearchResponseResults(results: SearchResponseResult[]): Item[] {
+    return results.map(({id, urls})=> ({id: id, smallUrl: urls.small}));
   }
-}
-
-export interface SearchResultsData {
-  totalCount: number;
-  items: Photo[];
-}
-
-export interface Photo {
-  id: string;
-  smallUrl: string;
 }

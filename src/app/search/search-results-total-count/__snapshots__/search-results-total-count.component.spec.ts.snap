@@ -1,22 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`SearchResultsTotalCountComponent should be rendered correctly when total items count equals 1 1`] = `
-<app-search-results-total-count
-  totalCount={[Function Number]}
->
-  <h5>
-    
-    
-    
-    1 photo
-    
-     found
-  </h5>
-  
-</app-search-results-total-count>
-`;
-
-exports[`SearchResultsTotalCountComponent should be rendered correctly when total items count equals zero 1`] = `
+exports[`SearchResultsTotalCountComponent should render total items count when it equals 0 1`] = `
 <app-search-results-total-count
   totalCount="0"
 >
@@ -32,7 +16,23 @@ exports[`SearchResultsTotalCountComponent should be rendered correctly when tota
 </app-search-results-total-count>
 `;
 
-exports[`SearchResultsTotalCountComponent should be rendered correctly when total items count is greater than 1 1`] = `
+exports[`SearchResultsTotalCountComponent should render total items count when it equals 1 1`] = `
+<app-search-results-total-count
+  totalCount={[Function Number]}
+>
+  <h5>
+    
+    
+    
+    1 photo
+    
+     found
+  </h5>
+  
+</app-search-results-total-count>
+`;
+
+exports[`SearchResultsTotalCountComponent should render total items count when it is greater than 1 1`] = `
 <app-search-results-total-count
   totalCount={[Function Number]}
 >

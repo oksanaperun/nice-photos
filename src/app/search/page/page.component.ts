@@ -9,11 +9,11 @@ import { SearchComponent } from '../search';
 export class PageComponent {
   @ViewChild('search') searchComponent: SearchComponent;
 
-  get isSpinner(): boolean {
+  get isLoading(): boolean {
     return this.searchComponent.isSearchStarted && !this.searchComponent.isSearchFinished;
   }
 
-  get isResultsDataReady(): boolean {
+  get isLoaded(): boolean {
     return this.searchComponent.isSearchFinished && !this.searchComponent.isError;
   }
 
