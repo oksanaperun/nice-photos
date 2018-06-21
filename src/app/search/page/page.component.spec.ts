@@ -52,10 +52,10 @@ describe('PageComponent', () => {
 
   it('should set properties on started search', () => {
     appService = fixture.debugElement.injector.get(AppService);
-    spyOn(appService, 'searchPhotosBySearchText').and.returnValue(Observable.of(null));
+    spyOn(appService, 'searchItemsBySearchText').and.returnValue(Observable.of(null));
 
     component.handleResponseOnSuccess = jest.fn();
-    component.searchPhotos(searchText);
+    component.searchItems(searchText);
 
     expect(component.isLoading).toBe(true);
     expect(component.isFailed).toBe(false);
@@ -63,11 +63,11 @@ describe('PageComponent', () => {
 
   it('should call AppService with search text', () => {
     appService = fixture.debugElement.injector.get(AppService);
-    spyOn(appService, 'searchPhotosBySearchText').and.returnValue(Observable.of(null));
+    spyOn(appService, 'searchItemsBySearchText').and.returnValue(Observable.of(null));
     component.handleResponseOnSuccess = jest.fn();
-    component.searchPhotos(searchText);
+    component.searchItems(searchText);
 
-    expect(appService.searchPhotosBySearchText).toBeCalledWith(searchText);
+    expect(appService.searchItemsBySearchText).toBeCalledWith(searchText);
   });
 
   it('should set properties on success call to AppService', () => {
@@ -83,9 +83,9 @@ describe('PageComponent', () => {
     const transformedResponse: SearchResultsData = { totalCount: 2, items: [transformedResult, transformedResult] };
 
     appService = fixture.debugElement.injector.get(AppService);
-    spyOn(appService, 'searchPhotosBySearchText').and.returnValue(Observable.of(response));
+    spyOn(appService, 'searchItemsBySearchText').and.returnValue(Observable.of(response));
 
-    component.searchPhotos(searchText);
+    component.searchItems(searchText);
 
     component.searchResultsData$.subscribe(response => {
       expect(component.isLoading).toBe(false);
@@ -96,9 +96,9 @@ describe('PageComponent', () => {
 
   it('should set properties on failed call to AppService', () => {
     appService = fixture.debugElement.injector.get(AppService);
-    spyOn(appService, 'searchPhotosBySearchText').and.returnValue(Observable.throw({ status: 500 }));
+    spyOn(appService, 'searchItemsBySearchText').and.returnValue(Observable.throw({ status: 500 }));
 
-    component.searchPhotos(searchText);
+    component.searchItems(searchText);
 
     component.searchResultsData$.subscribe(response => {
       expect(component.isLoading).toBe(false);
@@ -106,5 +106,4 @@ describe('PageComponent', () => {
       expect(response).toBe(null);
     });
   });
-
 });

@@ -17,13 +17,13 @@ export class PageComponent {
   constructor(private appService: AppService) { }
 
   onFormSubmit(searchText: string) {
-    this.searchPhotos(searchText);
+    this.searchItems(searchText);
   }
 
-  searchPhotos(searchText: string) {
+  searchItems(searchText: string) {
     this.setValuesOnSearchStart();
 
-    this.searchResultsData$ = this.appService.searchPhotosBySearchText(searchText)
+    this.searchResultsData$ = this.appService.searchItemsBySearchText(searchText)
       .pipe(
         map(this.transformSearchResponse.bind(this)),
         tap(this.handleResponseOnSuccess.bind(this)),
