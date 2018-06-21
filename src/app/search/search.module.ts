@@ -5,7 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { MatButtonModule, MatGridListModule, MatInputModule, MatProgressSpinnerModule } from '@angular/material';
 import { PageComponent } from './page';
-import { SearchComponent } from './search';
+import { SearchFormComponent } from './search-form';
 import { SearchFieldComponent } from './search-field';
 import { SearchErrorComponent } from './search-error';
 import { SearchSpinnerComponent } from './search-spinner';
@@ -18,7 +18,7 @@ import { SearchTipsComponent } from './search-tips';
 @NgModule({
   declarations: [
     PageComponent,
-    SearchComponent,
+    SearchFormComponent,
     SearchFieldComponent,
     SearchErrorComponent,
     SearchSpinnerComponent,

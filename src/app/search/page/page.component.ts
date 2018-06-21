@@ -1,4 +1,8 @@
 import { Component } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { map, tap, catchError } from 'rxjs/operators';
+import { of } from 'rxjs/observable/of';
+import { AppService, SearchResponse, SearchResponseResult, SearchResultsData, Item } from '../../app.service';
 
 @Component({
   selector: 'app-page',
@@ -7,18 +11,51 @@ import { Component } from '@angular/core';
 
 export class PageComponent {
   isLoading: boolean;
-  isLoaded: boolean;
   isFailed: boolean;
+  searchResultsData$: Observable<SearchResultsData>;
 
-  onLoading(isLoading: boolean) {
-    this.isLoading = isLoading;
+  constructor(private appService: AppService) { }
+
+  onFormSubmit(searchText: string) {
+    this.searchPhotos(searchText);
   }
 
-  onLoaded(isLoaded: boolean) {
-    this.isLoaded = isLoaded;
+  searchPhotos(searchText: string) {
+    this.setValuesOnSearchStart();
+
+    this.searchResultsData$ = this.appService.searchPhotosBySearchText(searchText)
+      .pipe(
+        map(this.transformSearchResponse.bind(this)),
+        tap(this.handleResponseOnSuccess.bind(this)),
+        catchError(() => {
+          this.handleResponseOnError();
+          return of(null);
+        })
+      );
   }
 
-  onFailed(isFailed: boolean) {
-    this.isFailed = isFailed;
+  setValuesOnSearchStart() {
+    this.isLoading = true;
+    this.isFailed = false;
+  }
+
+  handleResponseOnSuccess() {
+    this.isLoading = false;
+  }
+
+  handleResponseOnError() {
+    this.isLoading = false;
+    this.isFailed = true;
+  }
+
+  transformSearchResponse(response: SearchResponse): SearchResultsData {
+    return {
+      totalCount: response.total,
+      items: this.transformSearchResponseResults(response.results)
+    };
+  }
+
+  transformSearchResponseResults(results: SearchResponseResult[]): Item[] {
+    return results.map(({ id, urls }) => ({ id: id, smallUrl: urls.small }));
   }
 }
