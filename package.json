@@ -10,6 +10,7 @@
     "build": "npm run config -- --env=prod && ng build --prod",
     "test": "npm run config && jest",
     "test:watch": "npm run test -- --watchAll",
+    "test:coveralls": "npm run test -- --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "lint": "ng lint",
     "postinstall": "npm run build -- --aot"
   },
@@ -41,6 +42,7 @@
     "@types/jest": "^22.2.3",
     "@types/node": "~6.0.60",
     "codelyzer": "^4.0.1",
+    "coveralls": "^3.0.1",
     "enhanced-resolve": "^4.0.0",
     "jest": "^23.0.1",
     "jest-preset-angular": "^5.2.2",
@@ -53,6 +55,14 @@
   },
   "jest": {
     "preset": "jest-preset-angular",
-    "setupTestFrameworkScriptFile": "<rootDir>/src/setupJest.ts"
+    "setupTestFrameworkScriptFile": "<rootDir>/src/setupJest.ts",
+    "coverageThreshold": {
+      "global": {
+        "branches": 30,
+        "functions": 50,
+        "lines": 50,
+        "statements": 50
+      }
+    }
   }
 }
