@@ -1,0 +1,14 @@
+.mat-input-element,
+.mat-form-field-placeholder-wrapper {
+  font-family: 'Nunito', serif;
+}
+
+.mat-input-container {
+  margin-left: 5px;
+  width: 300px;
+}
+
+.mat-input-element {
+  font-size: x-large;
+  color: rgba(0,0,0,.87);;
+}

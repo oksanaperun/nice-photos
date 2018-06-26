@@ -15,6 +15,7 @@ exports[`SearchResultsItemComponent should notify that image is loading 1`] = `
     Loading...
   </span>
   
+  
 </app-search-results-item>
 `;
 
@@ -33,6 +34,7 @@ exports[`SearchResultsItemComponent should notify that image loading is failed 1
   <span>
     Photo can't be loaded
   </span>
+  
 </app-search-results-item>
 `;
 
@@ -46,6 +48,7 @@ exports[`SearchResultsItemComponent should render image 1`] = `
     class=""
     src="some-url"
   />
+  
   
   
   

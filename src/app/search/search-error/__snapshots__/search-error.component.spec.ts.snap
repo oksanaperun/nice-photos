@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SearchErrorComponent should render message 1`] = `
+<app-search-error>
+  <h3>
+    Sorry, we can't process your search request right now. Please, try again later
+  </h3>
+  
+</app-search-error>
+`;

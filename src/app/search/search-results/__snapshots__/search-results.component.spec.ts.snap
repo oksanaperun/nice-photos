@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SearchResultsComponent should render item list when total items count is greater than zero 1`] = `
+<app-search-results
+  data={[Function Object]}
+>
+  <app-search-results-total-count />
+  <app-search-results-item-list />
+  
+  
+</app-search-results>
+`;
+
+exports[`SearchResultsComponent should render search tips when total items count equals zero 1`] = `
+<app-search-results
+  data={[Function Object]}
+>
+  <app-search-results-total-count />
+  
+    <app-search-tips />
+  
+  
+  
+</app-search-results>
+`;

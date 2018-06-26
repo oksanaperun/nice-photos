@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Item } from '../../app.service';
 
 @Component({
   selector: 'app-search-results-item',
@@ -7,7 +8,7 @@ import { Component, Input } from '@angular/core';
 })
 
 export class SearchResultsItemComponent {
-  @Input() item; // TODO: add type
+  @Input() item: Item;
 
   isLoaded = false;
   isLoadingFailed = false;

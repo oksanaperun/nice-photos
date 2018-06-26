@@ -1,0 +1,52 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PageComponent should render error when search finished with error 1`] = `
+<app-page
+  appService={[Function AppService]}
+  isFailed={[Function Boolean]}
+>
+  <app-search-form />
+  
+  
+  <app-search-error />
+  
+</app-page>
+`;
+
+exports[`PageComponent should render only search form by default 1`] = `
+<app-page
+  appService={[Function AppService]}
+>
+  <app-search-form />
+  
+  
+  
+  
+</app-page>
+`;
+
+exports[`PageComponent should render search results when there are search results data 1`] = `
+<app-page
+  appService={[Function AppService]}
+  searchResultsData$={[Function ScalarObservable]}
+>
+  <app-search-form />
+  
+  <app-search-results />
+  
+  
+</app-page>
+`;
+
+exports[`PageComponent should render spinner when search started 1`] = `
+<app-page
+  appService={[Function AppService]}
+  isLoading={[Function Boolean]}
+>
+  <app-search-form />
+  <app-search-spinner />
+  
+  
+  
+</app-page>
+`;

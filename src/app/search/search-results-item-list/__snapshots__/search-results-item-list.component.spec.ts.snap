@@ -36,5 +36,6 @@ exports[`SearchResultsItemListComponent should render items list 1`] = `
     
   
   </mat-grid-list>
+  
 </app-search-results-item-list>
 `;

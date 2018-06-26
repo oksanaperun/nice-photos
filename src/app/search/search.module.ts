@@ -4,21 +4,29 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { MatButtonModule, MatGridListModule, MatInputModule, MatProgressSpinnerModule } from '@angular/material';
-import { SearchComponent } from './search';
+import { PageComponent } from './page';
+import { SearchFormComponent } from './search-form';
+import { SearchFieldComponent } from './search-field';
+import { SearchErrorComponent } from './search-error';
+import { SearchSpinnerComponent } from './search-spinner';
 import { SearchResultsComponent } from './search-results';
 import { SearchResultsItemComponent } from './search-results-item';
 import { SearchResultsItemListComponent } from './search-results-item-list';
 import { SearchResultsTotalCountComponent } from './search-results-total-count';
-import { EmptySearchResultsComponent } from './empty-search-results';
+import { SearchTipsComponent } from './search-tips';
 
 @NgModule({
   declarations: [
-    SearchComponent,
+    PageComponent,
+    SearchFormComponent,
+    SearchFieldComponent,
+    SearchErrorComponent,
+    SearchSpinnerComponent,
     SearchResultsComponent,
     SearchResultsItemComponent,
     SearchResultsItemListComponent,
     SearchResultsTotalCountComponent,
-    EmptySearchResultsComponent,
+    SearchTipsComponent,
   ],
   imports: [
     CommonModule,
@@ -31,7 +39,7 @@ import { EmptySearchResultsComponent } from './empty-search-results';
     NoopAnimationsModule,
     ReactiveFormsModule,
   ],
-  exports: [SearchComponent]
+  exports: [PageComponent]
 })
 
 export class SearchModule { }

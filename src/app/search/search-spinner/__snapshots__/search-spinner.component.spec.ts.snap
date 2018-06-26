@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SearchSpinnerComponent should render spinner 1`] = `
+<app-search-spinner>
+  <mat-spinner
+    diameter="75"
+  />
+  
+</app-search-spinner>
+`;
