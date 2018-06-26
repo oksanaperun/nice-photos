@@ -46,5 +46,8 @@ export interface SearchResultsData {
 
 export interface Item {
   id: string;
+  height: number;
+  width: number;
+  color: string;
   smallUrl: string;
 }
