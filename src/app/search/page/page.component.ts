@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { map, tap, catchError } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
+import { Bind } from 'lodash-decorators';
 import { AppService, SearchResponse, SearchResponseResult, SearchResultsData, Item } from '../../app.service';
 
 @Component({
@@ -25,8 +26,8 @@ export class PageComponent {
 
     this.searchResultsData$ = this.appService.searchItemsBySearchText(searchText)
       .pipe(
-        map(this.transformSearchResponse.bind(this)),
-        tap(this.handleResponseOnSuccess.bind(this)),
+        map(this.transformSearchResponse),
+        tap(this.handleResponseOnSuccess),
         catchError(() => {
           this.handleResponseOnError();
           return of(null);
@@ -39,6 +40,7 @@ export class PageComponent {
     this.isFailed = false;
   }
 
+  @Bind()
   handleResponseOnSuccess() {
     this.isLoading = false;
   }
@@ -48,6 +50,7 @@ export class PageComponent {
     this.isFailed = true;
   }
 
+  @Bind()
   transformSearchResponse(response: SearchResponse): SearchResultsData {
     return {
       totalCount: response.total,

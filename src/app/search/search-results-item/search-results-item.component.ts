@@ -16,19 +16,21 @@ export class SearchResultsItemComponent {
   loadingFailedPlaceholder = 'assets/loading_failed.png';
 
   get itemBoxStyle() {
-    if (this.item && (!this.isLoaded || this.isLoadingFailed))
+    if (this.item && (!this.isLoaded || this.isLoadingFailed)) {
       return {
         'background-color': this.item.color
       };
+    }
   }
 
   get itemStyle() {
-    if (this.item && !this.isLoaded)
+    if (this.item && !this.isLoaded) {
       return {
         'height': this.item.height + 'px',
         'width': this.item.width + 'px',
         'opacity': 0
       };
+    }
   }
 
   onLoaded(): void {
