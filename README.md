@@ -1,4 +1,4 @@
-# Nice Photos [![Build Status](https://travis-ci.org/oksanaperun/nice-photos.png?branch=master)](https://travis-ci.org/oksanaperun/nice-photos) [![Coverage Status](https://coveralls.io/repos/github/oksanaperun/nice-photos/badge.png)](https://coveralls.io/github/oksanaperun/nice-photos)
+# Nice Photos [![Build Status](https://travis-ci.org/oksanaperun/nice-photos.png?branch=master)](https://travis-ci.org/oksanaperun/nice-photos) [![Coverage Status](https://coveralls.io/repos/github/oksanaperun/nice-photos/badge.png?branch=master)](https://coveralls.io/github/oksanaperun/nice-photos?branch=master)
 
 Search for nice photos using Unsplash API.
 
