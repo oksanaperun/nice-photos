@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Photo } from '../search';
+import { Item } from '../../app.service';
 
 @Component({
   selector: 'app-search-results-item',
@@ -8,7 +8,7 @@ import { Photo } from '../search';
 })
 
 export class SearchResultsItemComponent {
-  @Input() item: Photo;
+  @Input() item: Item;
 
   isLoaded = false;
   isLoadingFailed = false;

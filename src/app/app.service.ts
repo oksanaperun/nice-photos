@@ -7,7 +7,7 @@ import { environment } from '../environments/environment';
 export class AppService {
   constructor(private http: HttpClient) { }
 
-  searchPhotosBySearchText(searchText): Observable<SearchResponse> {
+  searchItemsBySearchText(searchText): Observable<SearchResponse> {
     const header = new HttpHeaders().set('Accept-Version', 'v1');
     let params = new HttpParams().set('query', searchText);
     params = params.append('client_id', environment.clientId);
@@ -37,4 +37,14 @@ export interface SearchResponseResult {
 export interface SearchResponseResultUrls {
   small: string;
   regular: string;
+}
+
+export interface SearchResultsData {
+  totalCount: number;
+  items: Item[];
+}
+
+export interface Item {
+  id: string;
+  smallUrl: string;
 }

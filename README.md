@@ -1,4 +1,4 @@
-# Nice Photos [![Build Status](https://travis-ci.org/oksanaperun/nice-photos.png?branch=master)](https://travis-ci.org/oksanaperun/nice-photos)
+# Nice Photos [![Build Status](https://travis-ci.org/oksanaperun/nice-photos.png?branch=master)](https://travis-ci.org/oksanaperun/nice-photos) [![Coverage Status](https://coveralls.io/repos/github/oksanaperun/nice-photos/badge.png?branch=master)](https://coveralls.io/github/oksanaperun/nice-photos?branch=master)
 
 Search for nice photos using Unsplash API.
 
@@ -8,7 +8,7 @@ Run `npm run start:dev` for a dev server and browser will automatically navigate
 
 ## Build
 
-Run `npm run build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+Run `npm run build` to build the project for production. The build artifacts will be stored in the `dist/` directory.
 
 ## Running unit tests
 

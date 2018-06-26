@@ -1,4 +1,4 @@
-<form #searchForm="ngForm" class="search-form" (ngSubmit)="searchPhotos(searchField.searchInput.value)">
+<form #searchForm="ngForm" class="search-form" (ngSubmit)="onSubmit(searchField.searchInput.value)">
   <button mat-mini-fab color="primary" type="submit"
           [disabled]="searchField.searchInput.invalid">
     <i class="material-icons">search</i>

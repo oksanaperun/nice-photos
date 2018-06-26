@@ -1,4 +1,4 @@
-<app-search #search></app-search>
-<app-search-spinner *ngIf="isSpinner"></app-search-spinner>
-<app-search-results *ngIf="isResultsDataReady" [data]="search.searchResultsData"></app-search-results>
-<app-search-error *ngIf="isError"></app-search-error>
+<app-search-form (formSubmit)="onFormSubmit($event)"></app-search-form>
+<app-search-spinner *ngIf="isLoading"></app-search-spinner>
+<app-search-results *ngIf="searchResultsData$ | async as data" [data]="data"></app-search-results>
+<app-search-error *ngIf="isFailed"></app-search-error>

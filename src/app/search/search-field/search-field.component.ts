@@ -1,6 +1,6 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { SearchTextErrorStateMatcher } from './searchTextErrorStateMatcher';
+import { SearchTextErrorStateMatcher } from './search-text-error-state-matcher';
 
 @Component({
   selector: 'app-search-field',
