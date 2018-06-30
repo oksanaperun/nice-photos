@@ -26,8 +26,8 @@ export class SearchResultsItemComponent {
   get itemStyle() {
     if (this.item && !this.isLoaded) {
       return {
-        'height': this.item.height + 'px',
-        'width': this.item.width + 'px',
+        'height': '700px',
+        'width': '500px',
         'opacity': 0
       };
     }

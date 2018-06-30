@@ -13,7 +13,7 @@ describe('SearchResultsItemComponent', () => {
 
     fixture = TestBed.createComponent(SearchResultsItemComponent);
     component = fixture.componentInstance;
-    component.item = { id: 'some', smallUrl: 'some-url', height: 50, width: 100, color: '#add4dd' };
+    component.item = { id: 'some', color: '#add4dd', smallUrl: 'some-url' };
 
     fixture.detectChanges();
   });

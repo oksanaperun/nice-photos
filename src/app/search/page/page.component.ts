@@ -59,14 +59,6 @@ export class PageComponent {
   }
 
   transformSearchResponseResults(results: SearchResponseResult[]): Item[] {
-    return results.map(result => {
-      return {
-        id: result.id,
-        height: result.height,
-        width: result.width,
-        color: result.color,
-        smallUrl: result.urls.small
-      };
-    });
+    return results.map(({ id, color, urls }) => ({ id: id, color: color, smallUrl: urls.small }));
   }
 }
