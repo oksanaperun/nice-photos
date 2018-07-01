@@ -37,7 +37,7 @@ describe('PageComponent', () => {
   });
 
   it('should render search results when there are search results data', () => {
-    component.searchResultsData$ = Observable.of({ totalCount: 0, items: [] });
+    component.totalCount$ = Observable.of(0);
     fixture.detectChanges();
 
     expect(fixture).toMatchSnapshot();
@@ -52,22 +52,23 @@ describe('PageComponent', () => {
 
   it('should set properties on started search', () => {
     appService = fixture.debugElement.injector.get(AppService);
-    spyOn(appService, 'searchItemsBySearchText').and.returnValue(Observable.of(null));
+    spyOn(appService, 'getItems').and.returnValue(Observable.of(null));
 
     component.handleResponseOnSuccess = jest.fn();
     component.searchItems(searchText);
 
     expect(component.isLoading).toBe(true);
     expect(component.isFailed).toBe(false);
+    expect(component.pageNumber).toBe(1);
   });
 
-  it('should call AppService with search text', () => {
+  it('should call AppService with search text and page number', () => {
     appService = fixture.debugElement.injector.get(AppService);
-    spyOn(appService, 'searchItemsBySearchText').and.returnValue(Observable.of(null));
+    spyOn(appService, 'getItems').and.returnValue(Observable.of(null));
     component.handleResponseOnSuccess = jest.fn();
     component.searchItems(searchText);
 
-    expect(appService.searchItemsBySearchText).toBeCalledWith(searchText);
+    expect(appService.getItems).toBeCalledWith(searchText, 1);
   });
 
   it('should set properties on success call to AppService', () => {
@@ -80,27 +81,26 @@ describe('PageComponent', () => {
       smallUrl: result.urls.small
     };
     const response: SearchResponse = { total: 2, results: [result, result] };
-    const transformedResponse: SearchResultsData = { totalCount: 2, items: [transformedResult, transformedResult] };
 
     appService = fixture.debugElement.injector.get(AppService);
-    spyOn(appService, 'searchItemsBySearchText').and.returnValue(Observable.of(response));
+    spyOn(appService, 'getItems').and.returnValue(Observable.of(response));
 
     component.searchItems(searchText);
 
-    component.searchResultsData$.subscribe(response => {
+    component.totalCount$.subscribe(response => {
       expect(component.isLoading).toBe(false);
       expect(component.isFailed).toBe(false);
-      expect(response).toEqual(transformedResponse);
+      expect(response).toEqual(2);
     });
   });
 
   it('should set properties on failed call to AppService', () => {
     appService = fixture.debugElement.injector.get(AppService);
-    spyOn(appService, 'searchItemsBySearchText').and.returnValue(Observable.throw({ status: 500 }));
+    spyOn(appService, 'getItems').and.returnValue(Observable.throw({ status: 500 }));
 
     component.searchItems(searchText);
 
-    component.searchResultsData$.subscribe(response => {
+    component.totalCount$.subscribe(response => {
       expect(component.isLoading).toBe(false);
       expect(component.isFailed).toBe(true);
       expect(response).toBe(null);

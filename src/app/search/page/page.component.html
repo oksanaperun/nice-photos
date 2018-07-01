@@ -1,4 +1,4 @@
 <app-search-form (formSubmit)="onFormSubmit($event)"></app-search-form>
+<app-search-results *ngIf="totalCount$ | async as totalCount" [totalCount]="totalCount" [items]="items"></app-search-results>
 <app-search-spinner *ngIf="isLoading"></app-search-spinner>
-<app-search-results *ngIf="searchResultsData$ | async as data" [data]="data"></app-search-results>
 <app-search-error *ngIf="isFailed"></app-search-error>

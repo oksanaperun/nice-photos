@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { map, tap, catchError } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
-import { AppService, SearchResponse, SearchResponseResult, SearchResultsData, Item } from '../../app.service';
+import { AppService, SearchResponse, SearchResponseResult, Item } from '../../app.service';
 
 @Component({
   selector: 'app-page',
@@ -10,22 +10,33 @@ import { AppService, SearchResponse, SearchResponseResult, SearchResultsData, It
 })
 
 export class PageComponent {
+  searchText: string;
+
   isLoading: boolean;
   isFailed: boolean;
-  searchResultsData$: Observable<SearchResultsData>;
+
+  pageNumber: number;
+  totalPagesNumber: number;
+
+  items: Item[] = [];
+
+  totalCount$: Observable<number>;
 
   constructor(private appService: AppService) { }
 
   onFormSubmit(searchText: string) {
+    this.searchText = searchText;
     this.searchItems(searchText);
   }
 
   searchItems(searchText: string) {
-    this.setValuesOnSearchStart();
+    this.setValuesOnLoading(false);
 
-    this.searchResultsData$ = this.appService.searchItemsBySearchText(searchText)
+    this.totalCount$ = this.appService.getItems(searchText, this.pageNumber)
       .pipe(
-        map(this.transformSearchResponse.bind(this)),
+        tap(this.setTotalPagesNumber.bind(this)),
+        tap(this.setItems.bind(this)),
+        map(this.getTotalCount.bind(this)),
         tap(this.handleResponseOnSuccess.bind(this)),
         catchError(() => {
           this.handleResponseOnError();
@@ -34,7 +45,11 @@ export class PageComponent {
       );
   }
 
-  setValuesOnSearchStart() {
+  setValuesOnLoading(isLoadMore: boolean) {
+    if (isLoadMore)
+      this.pageNumber++;
+    else this.pageNumber = 1;
+
     this.isLoading = true;
     this.isFailed = false;
   }
@@ -48,14 +63,37 @@ export class PageComponent {
     this.isFailed = true;
   }
 
-  transformSearchResponse(response: SearchResponse): SearchResultsData {
-    return {
-      totalCount: response.total,
-      items: this.transformSearchResponseResults(response.results)
-    };
+  setTotalPagesNumber(response: SearchResponse) {
+    this.totalPagesNumber = response.total_pages;
+  }
+
+  setItems(response: SearchResponse) {
+    const newItems = this.transformSearchResponseResults(response.results);
+
+    this.items = this.items.concat(newItems);
   }
 
   transformSearchResponseResults(results: SearchResponseResult[]): Item[] {
-    return results.map(({ id, urls }) => ({ id: id, smallUrl: urls.small }));
+    return results.map(({ id, urls }) => ({ id, smallUrl: urls.small }));
+  }
+
+  getTotalCount(response: SearchResponse): number {
+    return response.total;
+  }
+
+  loadMore() {
+    if (this.pageNumber < this.totalPagesNumber) {
+      this.setValuesOnLoading(true);
+
+      this.appService.getItems(this.searchText, this.pageNumber)
+        .pipe(
+          tap(this.setItems.bind(this)),
+          tap(this.handleResponseOnSuccess.bind(this)),
+          catchError(() => {
+            this.handleResponseOnError();
+            return of(null);
+          })
+        ).subscribe();
+    }
   }
 }

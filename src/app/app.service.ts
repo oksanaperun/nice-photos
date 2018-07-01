@@ -7,10 +7,11 @@ import { environment } from '../environments/environment';
 export class AppService {
   constructor(private http: HttpClient) { }
 
-  searchItemsBySearchText(searchText): Observable<SearchResponse> {
+  getItems(searchText: string, pageNumber: number): Observable<SearchResponse> {
     const header = new HttpHeaders().set('Accept-Version', 'v1');
     let params = new HttpParams().set('query', searchText);
     params = params.append('client_id', environment.clientId);
+    params = params.append('page', pageNumber.toString());
     params = params.append('per_page', '9');
     params = params.append('orientation', 'landscape');
 
@@ -23,6 +24,7 @@ export class AppService {
 
 export interface SearchResponse {
   total: number;
+  total_pages: number;
   results: SearchResponseResult[];
 }
 

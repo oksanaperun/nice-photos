@@ -3,7 +3,7 @@
 exports[`SearchSpinnerComponent should render spinner 1`] = `
 <app-search-spinner>
   <mat-spinner
-    diameter="75"
+    diameter="50"
   />
   
 </app-search-spinner>

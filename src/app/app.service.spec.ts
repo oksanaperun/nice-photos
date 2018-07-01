@@ -30,7 +30,7 @@ describe('AppService', () => {
   it('should get items', () => {
     const searchResponse = { total: 0, results: [] };
 
-    service.searchItemsBySearchText(1).subscribe(response => {
+    service.getItems('1', 1).subscribe(response => {
       expect(response).toEqual(searchResponse);
     });
 
@@ -42,7 +42,7 @@ describe('AppService', () => {
   it('should use search text as query parameter when getting items', () => {
     const searchText = 'abc';
 
-    service.searchItemsBySearchText(searchText).subscribe(() => { });
+    service.getItems(searchText, 1).subscribe(() => { });
 
     const req = httpMock.expectOne(req => req.method === 'GET' && req.url === `${environment.apiBase}/search/photos`);
 

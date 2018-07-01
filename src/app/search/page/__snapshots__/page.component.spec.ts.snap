@@ -4,6 +4,7 @@ exports[`PageComponent should render error when search finished with error 1`] =
 <app-page
   appService={[Function AppService]}
   isFailed={[Function Boolean]}
+  items={[Function Array]}
 >
   <app-search-form />
   
@@ -16,6 +17,7 @@ exports[`PageComponent should render error when search finished with error 1`] =
 exports[`PageComponent should render only search form by default 1`] = `
 <app-page
   appService={[Function AppService]}
+  items={[Function Array]}
 >
   <app-search-form />
   
@@ -28,11 +30,12 @@ exports[`PageComponent should render only search form by default 1`] = `
 exports[`PageComponent should render search results when there are search results data 1`] = `
 <app-page
   appService={[Function AppService]}
-  searchResultsData$={[Function ScalarObservable]}
+  items={[Function Array]}
+  totalCount$={[Function ScalarObservable]}
 >
   <app-search-form />
   
-  <app-search-results />
+  
   
   
 </app-page>
@@ -42,10 +45,11 @@ exports[`PageComponent should render spinner when search started 1`] = `
 <app-page
   appService={[Function AppService]}
   isLoading={[Function Boolean]}
+  items={[Function Array]}
 >
   <app-search-form />
-  <app-search-spinner />
   
+  <app-search-spinner />
   
   
 </app-page>
