@@ -39,14 +39,16 @@ describe('AppService', () => {
     req.flush(searchResponse);
   });
 
-  it('should use search text as query parameter when getting items', () => {
+  it('should use search text and page number as query parameters when getting items', () => {
     const searchText = 'abc';
+    const pageNumber = 2;
 
-    service.getItems(searchText, 1).subscribe(() => { });
+    service.getItems(searchText, pageNumber).subscribe(() => { });
 
     const req = httpMock.expectOne(req => req.method === 'GET' && req.url === `${environment.apiBase}/search/photos`);
 
     expect(req.request.params.get('query')).toBe(searchText);
+    expect(req.request.params.get('page')).toBe(pageNumber.toString());
 
     req.flush({});
   });

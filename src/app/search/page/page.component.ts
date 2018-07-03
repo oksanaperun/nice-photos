@@ -26,20 +26,20 @@ export class PageComponent {
 
   onFormSubmit(searchText: string) {
     this.searchText = searchText;
-    this.searchItems(searchText);
+    this.searchItems();
   }
 
-  searchItems(searchText: string) {
+  searchItems() {
     this.setValuesOnLoading(false);
 
-    this.totalCount$ = this.appService.getItems(searchText, this.pageNumber)
+    this.totalCount$ = this.appService.getItems(this.searchText, this.pageNumber)
       .pipe(
         tap(this.setTotalPagesNumber.bind(this)),
         tap(this.setItems.bind(this)),
         map(this.getTotalCount.bind(this)),
-        tap(this.handleResponseOnSuccess.bind(this)),
+        tap(this.stopLoadingOnSuccess.bind(this)),
         catchError(() => {
-          this.handleResponseOnError();
+          this.stopLoadingOnError();
           return of(null);
         })
       );
@@ -54,11 +54,11 @@ export class PageComponent {
     this.isFailed = false;
   }
 
-  handleResponseOnSuccess() {
+  stopLoadingOnSuccess() {
     this.isLoading = false;
   }
 
-  handleResponseOnError() {
+  stopLoadingOnError() {
     this.isLoading = false;
     this.isFailed = true;
   }
@@ -88,9 +88,9 @@ export class PageComponent {
       this.appService.getItems(this.searchText, this.pageNumber)
         .pipe(
           tap(this.setItems.bind(this)),
-          tap(this.handleResponseOnSuccess.bind(this)),
+          tap(this.stopLoadingOnSuccess.bind(this)),
           catchError(() => {
-            this.handleResponseOnError();
+            this.stopLoadingOnError();
             return of(null);
           })
         ).subscribe();

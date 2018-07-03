@@ -38,11 +38,6 @@ export interface SearchResponseResultUrls {
   regular: string;
 }
 
-export interface SearchResultsData {
-  totalCount: number;
-  items: Item[];
-}
-
 export interface Item {
   id: string;
   smallUrl: string;
