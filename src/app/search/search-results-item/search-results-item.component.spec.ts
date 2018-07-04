@@ -13,7 +13,7 @@ describe('SearchResultsItemComponent', () => {
 
     fixture = TestBed.createComponent(SearchResultsItemComponent);
     component = fixture.componentInstance;
-    component.item = {id: 'some', smallUrl: 'some-url'};
+    component.item = { id: 'some', color: '#add4dd', smallUrl: 'some-url' };
 
     fixture.detectChanges();
   });
@@ -29,24 +29,19 @@ describe('SearchResultsItemComponent', () => {
     component.isLoaded = false;
     fixture.detectChanges();
 
-    expect(fixture.debugElement.query(By.css('img.hidden')))
-      .toBeTruthy();
+    expect(fixture.debugElement.query(By.css('img.loaded')))
+      .toBeFalsy();
   });
 
-  it('should NOT display image when image loading is failed', () => {
-    component.isLoadingFailed = true;
+  it('should display placeholder when image is loading', () => {
+    component.isLoaded = false;
     fixture.detectChanges();
 
-    expect(fixture.debugElement.query(By.css('img.hidden')))
-      .toBeTruthy();
-  });
-
-  it('should notify that image is loading', () => {
     expect(fixture).toMatchSnapshot();
   });
 
-  it('should notify that image loading is failed', () => {
-    component.isLoadingFailed = true;
+  it('should display placeholder when image loading is failed', () => {
+    component.onLoadingFailed();
     fixture.detectChanges();
 
     expect(fixture).toMatchSnapshot();
