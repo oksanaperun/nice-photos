@@ -23,16 +23,6 @@ export class SearchResultsItemComponent {
     }
   }
 
-  get itemStyle() {
-    if (this.item && !this.isLoaded) {
-      return {
-        'height': '700px',
-        'width': '500px',
-        'opacity': 0
-      };
-    }
-  }
-
   onLoaded(): void {
     this.isLoaded = true;
   }

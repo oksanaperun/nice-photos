@@ -1,3 +1,9 @@
+.loading {
+  height: 700px;
+  width: 500px;
+  opacity: 0;
+}
+
 .loaded {
   opacity: 1;
   transition: opacity 0.6s ease;

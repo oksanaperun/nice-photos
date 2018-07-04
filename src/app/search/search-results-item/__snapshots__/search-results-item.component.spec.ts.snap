@@ -14,9 +14,8 @@ exports[`SearchResultsItemComponent should display placeholder when image is loa
     
     
     <img
-      ng-reflect-ng-style="[object Object]"
+      class="loading"
       src="some-url"
-      style="height: 700px; width: 500px; opacity: 0;"
     />
     
   
@@ -39,9 +38,8 @@ exports[`SearchResultsItemComponent should display placeholder when image loadin
     
     
     <img
-      ng-reflect-ng-style="[object Object]"
+      class="loading"
       src="assets/loading_failed.png"
-      style="height: 700px; width: 500px; opacity: 0;"
     />
     
   
@@ -65,7 +63,6 @@ exports[`SearchResultsItemComponent should render image 1`] = `
     <img
       class="loaded"
       src="some-url"
-      style=""
     />
     
   
