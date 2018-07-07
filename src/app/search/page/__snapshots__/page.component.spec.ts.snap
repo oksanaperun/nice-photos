@@ -10,6 +10,13 @@ exports[`PageComponent should render error when search finished with error 1`] =
   
   <app-search-error />
   
+  <div
+    infinitescroll=""
+  >
+    
+  
+  </div>
+  
 </app-page>
 `;
 
@@ -21,6 +28,13 @@ exports[`PageComponent should render only search form by default 1`] = `
   
   
   
+  
+  <div
+    infinitescroll=""
+  >
+    
+  
+  </div>
   
 </app-page>
 `;
@@ -35,6 +49,13 @@ exports[`PageComponent should render search results when there are search result
   
   
   
+  <div
+    infinitescroll=""
+  >
+    
+  
+  </div>
+  
 </app-page>
 `;
 
@@ -47,6 +68,13 @@ exports[`PageComponent should render spinner when search started 1`] = `
   
   <app-search-spinner />
   
+  
+  <div
+    infinitescroll=""
+  >
+    
+  
+  </div>
   
 </app-page>
 `;
