@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Component, OnDestroy } from '@angular/core';
 import { map, tap, catchError } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
+import { ISubscription } from 'rxjs/Subscription';
 import { Bind } from 'lodash-decorators';
 import { AppService, SearchResponse, SearchResponseResult, Item } from '../../app.service';
 
@@ -10,7 +10,7 @@ import { AppService, SearchResponse, SearchResponseResult, Item } from '../../ap
   templateUrl: './page.component.html',
 })
 
-export class PageComponent {
+export class PageComponent implements OnDestroy {
   searchText: string;
 
   isLoading: boolean;
@@ -19,11 +19,16 @@ export class PageComponent {
   pageNumber: number;
   totalPagesNumber: number;
 
-  items: Item[] = [];
+  items: Item[];
+  totalCount: number;
 
-  totalCount$: Observable<number>;
+  subscription: ISubscription;
 
   constructor(private appService: AppService) { }
+
+  ngOnDestroy() {
+    if (this.subscription) this.subscription.unsubscribe();
+  }
 
   onFormSubmit(searchText: string) {
     this.searchText = searchText;
@@ -32,37 +37,40 @@ export class PageComponent {
 
   searchItems() {
     this.setValuesOnLoading(false);
+    this.getItemsAndSetData();
+  }
 
-    this.totalCount$ = this.appService.getItems(this.searchText, this.pageNumber)
-      .pipe(
-        tap(this.setTotalPagesNumber),
-        tap(this.setItems),
-        map(this.getTotalCount),
-        tap(this.stopLoadingOnSuccess),
-        catchError(() => {
-          this.stopLoadingOnError();
-          return of(null);
-        })
-      );
+  loadMore() {
+    if (this.pageNumber < this.totalPagesNumber) {
+      this.setValuesOnLoading(true);
+      this.getItemsAndSetData();
+    }
   }
 
   setValuesOnLoading(isLoadMore: boolean) {
     if (isLoadMore)
       this.pageNumber++;
-    else this.pageNumber = 1;
+    else {
+      this.pageNumber = 1;
+      this.items = [];
+    }
 
     this.isLoading = true;
     this.isFailed = false;
   }
 
-  @Bind()
-  stopLoadingOnSuccess() {
-    this.isLoading = false;
-  }
-
-  stopLoadingOnError() {
-    this.isLoading = false;
-    this.isFailed = true;
+  getItemsAndSetData() {
+    this.subscription = this.appService.getItems(this.searchText, this.pageNumber)
+      .pipe(
+        tap(this.setTotalPagesNumber),
+        tap(this.setItems),
+        map(this.setTotalCount),
+        tap(this.stopLoadingOnSuccess),
+        catchError(() => {
+          this.stopLoadingOnError();
+          return of(null);
+        })
+      ).subscribe();
   }
 
   @Bind()
@@ -82,23 +90,21 @@ export class PageComponent {
   }
 
   @Bind()
-  getTotalCount(response: SearchResponse): number {
-    return response.total;
+  setTotalCount(response: SearchResponse) {
+    this.totalCount = response.total;
   }
 
-  loadMore() {
-    if (this.pageNumber < this.totalPagesNumber) {
-      this.setValuesOnLoading(true);
+  @Bind()
+  stopLoadingOnSuccess() {
+    this.isLoading = false;
+  }
 
-      this.appService.getItems(this.searchText, this.pageNumber)
-        .pipe(
-          tap(this.setItems),
-          tap(this.stopLoadingOnSuccess),
-          catchError(() => {
-            this.stopLoadingOnError();
-            return of(null);
-          })
-        ).subscribe();
-    }
+  stopLoadingOnError() {
+    this.isLoading = false;
+    this.isFailed = true;
+  }
+
+  get isLoaded(): boolean {
+    return this.totalCount > - 1;
   }
 }

@@ -46,7 +46,7 @@ describe('PageComponent', () => {
   });
 
   it('should render search results when there are search results data', () => {
-    component.totalCount$ = Observable.of(0);
+    component.totalCount = 0;
     fixture.detectChanges();
 
     expect(fixture).toMatchSnapshot();
@@ -69,7 +69,7 @@ describe('PageComponent', () => {
 
   it('should set properties on loading when search items', () => {
     appService = fixture.debugElement.injector.get(AppService);
-    spyOn(appService, 'getItems').and.returnValue(Observable.of(null));
+    spyOn(appService, 'getItems').and.returnValue(Observable.of(null).delay(500));
 
     component.searchItems();
 
@@ -80,7 +80,7 @@ describe('PageComponent', () => {
 
   it('should call AppService with search text and page number when search items', () => {
     appService = fixture.debugElement.injector.get(AppService);
-    spyOn(appService, 'getItems').and.returnValue(Observable.of(null));
+    spyOn(appService, 'getItems').and.returnValue(Observable.of(null).delay(500));
 
     component.searchText = searchText;
     component.searchItems();
@@ -96,13 +96,11 @@ describe('PageComponent', () => {
 
     component.searchItems();
 
-    component.totalCount$.subscribe(totalCount => {
-      expect(component.isLoading).toBe(false);
-      expect(component.isFailed).toBe(false);
-      expect(totalCount).toBe(2);
-      expect(component.totalPagesNumber).toBe(3);
-      expect(component.items).toEqual([transformedResult, transformedResult]);
-    });
+    expect(component.isLoading).toBe(false);
+    expect(component.isFailed).toBe(false);
+    expect(component.totalCount).toBe(2);
+    expect(component.totalPagesNumber).toBe(3);
+    expect(component.items).toEqual([transformedResult, transformedResult]);
   });
 
   it('should set properties on failed call to AppService when search items', () => {
@@ -111,11 +109,8 @@ describe('PageComponent', () => {
 
     component.searchItems();
 
-    component.totalCount$.subscribe(response => {
-      expect(component.isLoading).toBe(false);
-      expect(component.isFailed).toBe(true);
-      expect(response).toBe(null);
-    });
+    expect(component.isLoading).toBe(false);
+    expect(component.isFailed).toBe(true);
   });
 
   it('should set properties on loading when load more', () => {
