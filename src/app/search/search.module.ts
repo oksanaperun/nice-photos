@@ -4,6 +4,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { MatButtonModule, MatGridListModule, MatInputModule, MatProgressSpinnerModule } from '@angular/material';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { PageComponent } from './page';
 import { SearchFormComponent } from './search-form';
 import { SearchFieldComponent } from './search-field';
@@ -32,6 +33,7 @@ import { SearchTipsComponent } from './search-tips';
     CommonModule,
     FormsModule,
     HttpClientModule,
+    InfiniteScrollModule,
     MatButtonModule,
     MatGridListModule,
     MatInputModule,
