@@ -13,8 +13,14 @@ export class SearchResultsItemComponent {
   isLoaded = false;
   isLoadingFailed = false;
 
-  get isLoading(): boolean {
-    return !this.isLoaded && !this.isLoadingFailed;
+  loadingFailedPlaceholder = 'assets/loading_failed.png';
+
+  get itemBoxStyle() {
+    if (this.item && (!this.isLoaded || this.isLoadingFailed)) {
+      return {
+        'background-color': this.item.color
+      };
+    }
   }
 
   onLoaded(): void {
@@ -23,5 +29,6 @@ export class SearchResultsItemComponent {
 
   onLoadingFailed(): void {
     this.isLoadingFailed = true;
+    this.item.smallUrl = this.loadingFailedPlaceholder;
   }
 }

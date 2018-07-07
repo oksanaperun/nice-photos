@@ -1,9 +1,10 @@
-.hidden {
-  display: none;
-  transition: opacity 0.6s ease;
+.loading {
+  height: 700px;
+  width: 500px;
+  opacity: 0;
 }
 
-span {
-  font-family: 'Nunito', serif;
-  color: rgba(0, 0, 0, 0.5);
+.loaded {
+  opacity: 1;
+  transition: opacity 0.6s ease;
 }

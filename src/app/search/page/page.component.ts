@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { map, tap, catchError } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
+import { Bind } from 'lodash-decorators';
 import { AppService, SearchResponse, SearchResponseResult, Item } from '../../app.service';
 
 @Component({
@@ -34,10 +35,10 @@ export class PageComponent {
 
     this.totalCount$ = this.appService.getItems(this.searchText, this.pageNumber)
       .pipe(
-        tap(this.setTotalPagesNumber.bind(this)),
-        tap(this.setItems.bind(this)),
-        map(this.getTotalCount.bind(this)),
-        tap(this.stopLoadingOnSuccess.bind(this)),
+        tap(this.setTotalPagesNumber),
+        tap(this.setItems),
+        map(this.getTotalCount),
+        tap(this.stopLoadingOnSuccess),
         catchError(() => {
           this.stopLoadingOnError();
           return of(null);
@@ -54,6 +55,7 @@ export class PageComponent {
     this.isFailed = false;
   }
 
+  @Bind()
   stopLoadingOnSuccess() {
     this.isLoading = false;
   }
@@ -63,10 +65,12 @@ export class PageComponent {
     this.isFailed = true;
   }
 
+  @Bind()
   setTotalPagesNumber(response: SearchResponse) {
     this.totalPagesNumber = response.total_pages;
   }
 
+  @Bind()
   setItems(response: SearchResponse) {
     const newItems = this.transformSearchResponseResults(response.results);
 
@@ -74,9 +78,10 @@ export class PageComponent {
   }
 
   transformSearchResponseResults(results: SearchResponseResult[]): Item[] {
-    return results.map(({ id, urls }) => ({ id, smallUrl: urls.small }));
+    return results.map(({ id, color, urls }) => ({ id, color, smallUrl: urls.small }));
   }
 
+  @Bind()
   getTotalCount(response: SearchResponse): number {
     return response.total;
   }
@@ -87,8 +92,8 @@ export class PageComponent {
 
       this.appService.getItems(this.searchText, this.pageNumber)
         .pipe(
-          tap(this.setItems.bind(this)),
-          tap(this.stopLoadingOnSuccess.bind(this)),
+          tap(this.setItems),
+          tap(this.stopLoadingOnSuccess),
           catchError(() => {
             this.stopLoadingOnError();
             return of(null);

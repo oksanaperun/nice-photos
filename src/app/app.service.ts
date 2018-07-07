@@ -30,6 +30,7 @@ export interface SearchResponse {
 
 export interface SearchResponseResult {
   id: string;
+  color: string;
   urls: SearchResponseResultUrls;
 }
 
@@ -40,5 +41,6 @@ export interface SearchResponseResultUrls {
 
 export interface Item {
   id: string;
+  color: string;
   smallUrl: string;
 }
