@@ -1,6 +1,5 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { By } from '@angular/platform-browser';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
@@ -105,7 +104,7 @@ describe('PageComponent', () => {
       expect(component.totalCount).toBe(2);
       expect(component.totalPagesNumber).toBe(3);
       expect(response).toEqual([transformedResult, transformedResult]);
-    })
+    });
   });
 
   it('should set properties on failed call to AppService when search items', () => {

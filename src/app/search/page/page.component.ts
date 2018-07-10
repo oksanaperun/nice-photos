@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { fromEvent } from 'rxjs/observable/fromEvent';
 import { merge } from 'rxjs/observable/merge';
 import { distinct, filter, map, debounceTime, tap, flatMap, catchError } from 'rxjs/operators';
@@ -34,8 +35,8 @@ export class PageComponent {
 
   constructor(private appService: AppService) { }
 
-  getPageByScroll() {
-    return fromEvent(window, "scroll")
+  getPageByScroll(): Observable<number> {
+    return fromEvent(window, 'scroll')
       .pipe(
         map(() => window.scrollY),
         filter(current =>
@@ -49,8 +50,8 @@ export class PageComponent {
       );
   }
 
-  getPageByResize() {
-    return fromEvent(window, "resize")
+  getPageByResize(): Observable<number> {
+    return fromEvent(window, 'resize')
       .pipe(
         debounceTime(this.debounceTime),
         map(_ => Math.ceil(
@@ -60,7 +61,7 @@ export class PageComponent {
       );
   }
 
-  getPageToLoad() {
+  getPageToLoad(): Observable<number> {
     return merge(
       this.pageByManual$,
       this.pageByScroll$,
@@ -75,7 +76,7 @@ export class PageComponent {
     this.searchItems(searchText);
   }
 
-  searchItems(searchText) {
+  searchItems(searchText: string) {
     this.cache = [];
 
     this.items$ = this.pageToLoad$
@@ -90,7 +91,7 @@ export class PageComponent {
       );
   }
 
-  getItems(searchText, page) {
+  getItems(searchText: string, page: number): Observable<Item[]> {
     return this.appService.getItems(searchText, page)
       .pipe(
         tap(this.setTotalPagesNumber),
@@ -121,7 +122,7 @@ export class PageComponent {
     return results.map(({ id, color, urls }) => ({ id, color, smallUrl: urls.small }));
   }
 
-  isNextPage(currentPage: number) {
+  isNextPage(currentPage: number): boolean {
     if (currentPage < this.totalPagesNumber)
       return (this.itemHeight * this.numberOfItems * currentPage) < window.innerHeight;
 
