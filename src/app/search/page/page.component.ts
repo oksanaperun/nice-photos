@@ -24,8 +24,9 @@ export class PageComponent {
   items$: Observable<Item[]>;
   cache: Item[][];
 
-  itemHeight = 320;
-  numberOfItems = 3;
+  rowHeight = 320;
+  numberOfRowsPerPage = 3;
+  pageHeight = this.rowHeight * this.numberOfRowsPerPage;
   debounceTime = 500;
 
   pageByManual$ = new BehaviorSubject(1);
@@ -44,7 +45,7 @@ export class PageComponent {
         debounceTime(this.debounceTime),
         distinct(),
         map(y => Math.ceil(
-          (y + window.innerHeight) / (this.itemHeight * this.numberOfItems)
+          (y + window.innerHeight) / this.pageHeight
         )
         )
       );
@@ -55,8 +56,7 @@ export class PageComponent {
       .pipe(
         debounceTime(this.debounceTime),
         map(_ => Math.ceil(
-          (window.innerHeight + document.body.scrollTop) /
-          (this.itemHeight * this.numberOfItems)
+          (window.innerHeight + document.body.scrollTop) / this.pageHeight
         ))
       );
   }
@@ -101,9 +101,8 @@ export class PageComponent {
         tap(response => {
           this.cache[page - 1] = response;
 
-          if (this.isNextPage(page)) {
+          if (this.isNextPageByManual(page))
             this.pageByManual$.next(page + 1);
-          }
         })
       );
   }
@@ -122,9 +121,9 @@ export class PageComponent {
     return results.map(({ id, color, urls }) => ({ id, color, smallUrl: urls.small }));
   }
 
-  isNextPage(currentPage: number): boolean {
-    if (currentPage < this.totalPagesNumber)
-      return (this.itemHeight * this.numberOfItems * currentPage) < window.innerHeight;
+  isNextPageByManual(currentPageNumber: number): boolean {
+    if (currentPageNumber < this.totalPagesNumber)
+      return (this.pageHeight * currentPageNumber) < window.innerHeight;
 
     return false;
   }
