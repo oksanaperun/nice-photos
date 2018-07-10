@@ -1,8 +1,11 @@
-import { Component, OnDestroy } from '@angular/core';
-import { map, tap, catchError } from 'rxjs/operators';
+import { Component } from '@angular/core';
+import { Observable, BehaviorSubject } from 'rxjs';
+import { fromEvent } from 'rxjs/observable/fromEvent';
+import { merge } from 'rxjs/observable/merge';
+import { distinct, filter, map, debounceTime, tap, flatMap, catchError } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
-import { ISubscription } from 'rxjs/Subscription';
 import { Bind } from 'lodash-decorators';
+import * as _ from 'lodash';
 import { AppService, SearchResponse, SearchResponseResult, Item } from '../../app.service';
 
 @Component({
@@ -10,67 +13,98 @@ import { AppService, SearchResponse, SearchResponseResult, Item } from '../../ap
   templateUrl: './page.component.html',
 })
 
-export class PageComponent implements OnDestroy {
-  searchText: string;
-
+export class PageComponent {
   isLoading: boolean;
   isFailed: boolean;
 
-  pageNumber: number;
   totalPagesNumber: number;
-
-  items: Item[];
   totalCount: number;
 
-  subscription: ISubscription;
+  items$: Observable<Item[]>;
+  cache: Item[][];
+
+  itemHeight = 320;
+  numberOfItems = 3;
+  debounceTime = 500;
+
+  pageByManual$ = new BehaviorSubject(1);
+  pageByScroll$ = this.getPageByScroll();
+  pageByResize$ = this.getPageByResize();
+  pageToLoad$ = this.getPageToLoad();
 
   constructor(private appService: AppService) { }
 
-  ngOnDestroy() {
-    if (this.subscription) this.subscription.unsubscribe();
+  getPageByScroll() {
+    return fromEvent(window, "scroll")
+      .pipe(
+        map(() => window.scrollY),
+        filter(current =>
+          current >= document.body.clientHeight - window.innerHeight),
+        debounceTime(this.debounceTime),
+        distinct(),
+        map(y => Math.ceil(
+          (y + window.innerHeight) / (this.itemHeight * this.numberOfItems)
+        )
+        )
+      );
+  }
+
+  getPageByResize() {
+    return fromEvent(window, "resize")
+      .pipe(
+        debounceTime(this.debounceTime),
+        map(_ => Math.ceil(
+          (window.innerHeight + document.body.scrollTop) /
+          (this.itemHeight * this.numberOfItems)
+        ))
+      );
+  }
+
+  getPageToLoad() {
+    return merge(
+      this.pageByManual$,
+      this.pageByScroll$,
+      this.pageByResize$)
+      .pipe(
+        distinct(),
+        filter(page => this.cache[page - 1] === undefined)
+      );
   }
 
   onFormSubmit(searchText: string) {
-    this.searchText = searchText;
-    this.searchItems();
+    this.searchItems(searchText);
   }
 
-  searchItems() {
-    this.setValuesOnLoading(false);
-    this.getItemsAndSetData();
-  }
+  searchItems(searchText) {
+    this.cache = [];
 
-  loadMore() {
-    if (this.pageNumber < this.totalPagesNumber) {
-      this.setValuesOnLoading(true);
-      this.getItemsAndSetData();
-    }
-  }
-
-  setValuesOnLoading(isLoadMore: boolean) {
-    if (isLoadMore)
-      this.pageNumber++;
-    else {
-      this.pageNumber = 1;
-      this.items = [];
-    }
-
-    this.isLoading = true;
-    this.isFailed = false;
-  }
-
-  getItemsAndSetData() {
-    this.subscription = this.appService.getItems(this.searchText, this.pageNumber)
+    this.items$ = this.pageToLoad$
       .pipe(
-        tap(this.setTotalPagesNumber),
-        tap(this.setItems),
-        map(this.setTotalCount),
-        tap(this.stopLoadingOnSuccess),
+        tap(this.setValuesOnLoading),
+        flatMap((page: number) => this.getItems(searchText, page)),
+        map(() => _.flatMap(this.cache)),
         catchError(() => {
           this.stopLoadingOnError();
           return of(null);
         })
-      ).subscribe();
+      );
+  }
+
+  getItems(searchText, page) {
+    return this.appService.getItems(searchText, page)
+      .pipe(
+        tap(this.setTotalPagesNumber),
+        tap(this.setTotalCount),
+        map((response) => this.transformSearchResponseResults(response.results)),
+        tap(this.stopLoadingOnSuccess),
+        tap(response => {
+          this.cache[page - 1] = response;
+
+          if (this.isNextPage(page)) {
+            this.pageByManual$.next(page + 1);
+          }
+        })
+      );
   }
 
   @Bind()
@@ -79,19 +113,25 @@ export class PageComponent implements OnDestroy {
   }
 
   @Bind()
-  setItems(response: SearchResponse) {
-    const newItems = this.transformSearchResponseResults(response.results);
-
-    this.items = this.items.concat(newItems);
+  setTotalCount(response: SearchResponse) {
+    this.totalCount = response.total;
   }
 
   transformSearchResponseResults(results: SearchResponseResult[]): Item[] {
     return results.map(({ id, color, urls }) => ({ id, color, smallUrl: urls.small }));
   }
 
+  isNextPage(currentPage: number) {
+    if (currentPage < this.totalPagesNumber)
+      return (this.itemHeight * this.numberOfItems * currentPage) < window.innerHeight;
+
+    return false;
+  }
+
   @Bind()
-  setTotalCount(response: SearchResponse) {
-    this.totalCount = response.total;
+  setValuesOnLoading() {
+    this.isLoading = true;
+    this.isFailed = false;
   }
 
   @Bind()
@@ -102,9 +142,5 @@ export class PageComponent implements OnDestroy {
   stopLoadingOnError() {
     this.isLoading = false;
     this.isFailed = true;
-  }
-
-  get isLoaded(): boolean {
-    return this.totalCount > - 1;
   }
 }

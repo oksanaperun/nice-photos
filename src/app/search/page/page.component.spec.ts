@@ -16,10 +16,12 @@ describe('PageComponent', () => {
   const searchText = 'abc';
   const result: SearchResponseResult = {
     id: 'some-id',
+    color: '#add4dd',
     urls: { small: 'some-url', regular: 'some-url' }
   };
   const transformedResult: Item = {
     id: result.id,
+    color: '#add4dd',
     smallUrl: result.urls.small
   };
 
@@ -59,33 +61,34 @@ describe('PageComponent', () => {
     expect(fixture).toMatchSnapshot();
   });
 
-  it('should set #searchText and call #searchItems on form submit', () => {
+  it('should call #searchItems on form submit', () => {
     spyOn(component, 'searchItems');
     component.onFormSubmit(searchText);
 
-    expect(component.searchText).toBe(searchText);
-    expect(component.searchItems).toHaveBeenCalled();
+    expect(component.searchItems).toHaveBeenCalledWith(searchText);
   });
 
   it('should set properties on loading when search items', () => {
     appService = fixture.debugElement.injector.get(AppService);
-    spyOn(appService, 'getItems').and.returnValue(Observable.of(null).delay(500));
+    spyOn(appService, 'getItems').and.returnValue(Observable.of(null).delay(200));
 
-    component.searchItems();
+    component.searchItems(searchText);
 
-    expect(component.isLoading).toBe(true);
-    expect(component.isFailed).toBe(false);
-    expect(component.pageNumber).toBe(1);
+    component.items$.subscribe(() => {
+      expect(component.isLoading).toBe(true);
+      expect(component.isFailed).toBe(false);
+    });
   });
 
   it('should call AppService with search text and page number when search items', () => {
     appService = fixture.debugElement.injector.get(AppService);
-    spyOn(appService, 'getItems').and.returnValue(Observable.of(null).delay(500));
+    spyOn(appService, 'getItems').and.returnValue(Observable.of(null));
 
-    component.searchText = searchText;
-    component.searchItems();
+    component.searchItems(searchText);
 
-    expect(appService.getItems).toHaveBeenCalledWith(searchText, 1);
+    component.items$.subscribe(() => {
+      expect(appService.getItems).toHaveBeenCalledWith(searchText, 1);
+    });
   });
 
   it('should set properties on success call to AppService when search items', () => {
@@ -94,86 +97,27 @@ describe('PageComponent', () => {
     appService = fixture.debugElement.injector.get(AppService);
     spyOn(appService, 'getItems').and.returnValue(Observable.of(response));
 
-    component.searchItems();
+    component.searchItems(searchText);
 
-    expect(component.isLoading).toBe(false);
-    expect(component.isFailed).toBe(false);
-    expect(component.totalCount).toBe(2);
-    expect(component.totalPagesNumber).toBe(3);
-    expect(component.items).toEqual([transformedResult, transformedResult]);
+    component.items$.subscribe(response => {
+      expect(component.isLoading).toBe(false);
+      expect(component.isFailed).toBe(false);
+      expect(component.totalCount).toBe(2);
+      expect(component.totalPagesNumber).toBe(3);
+      expect(response).toEqual([transformedResult, transformedResult]);
+    })
   });
 
   it('should set properties on failed call to AppService when search items', () => {
     appService = fixture.debugElement.injector.get(AppService);
     spyOn(appService, 'getItems').and.returnValue(Observable.throw({ status: 500 }));
 
-    component.searchItems();
+    component.searchItems(searchText);
 
-    expect(component.isLoading).toBe(false);
-    expect(component.isFailed).toBe(true);
-  });
-
-  it('should set properties on loading when load more', () => {
-    appService = fixture.debugElement.injector.get(AppService);
-    spyOn(appService, 'getItems').and.returnValue(Observable.of(null).delay(500));
-
-    component.pageNumber = 2;
-    component.totalPagesNumber = 3;
-    component.loadMore();
-
-    expect(component.isLoading).toBe(true);
-    expect(component.isFailed).toBe(false);
-    expect(component.pageNumber).toBe(3);
-  });
-
-  it('should call AppService with search text and page number when load more', () => {
-    appService = fixture.debugElement.injector.get(AppService);
-    spyOn(appService, 'getItems').and.returnValue(Observable.of(null));
-
-    component.searchText = searchText;
-    component.pageNumber = 2;
-    component.totalPagesNumber = 3;
-    component.loadMore();
-
-    expect(appService.getItems).toHaveBeenCalledWith(searchText, 3);
-  });
-
-  it('should set properties on success call to AppService when load more', () => {
-    const response: SearchResponse = { total: 3, total_pages: 2, results: [result] };
-
-    appService = fixture.debugElement.injector.get(AppService);
-    spyOn(appService, 'getItems').and.returnValue(Observable.of(response));
-
-    component.pageNumber = 2;
-    component.totalPagesNumber = 3;
-    component.items = [transformedResult, transformedResult];
-    component.loadMore();
-
-    expect(component.isLoading).toBe(false);
-    expect(component.isFailed).toBe(false);
-    expect(component.items).toEqual([transformedResult, transformedResult, transformedResult]);
-  });
-
-  it('should set properties on failed call to AppService when load more', () => {
-    appService = fixture.debugElement.injector.get(AppService);
-    spyOn(appService, 'getItems').and.returnValue(Observable.throw({ status: 500 }));
-
-    component.pageNumber = 2;
-    component.totalPagesNumber = 3;
-    component.loadMore();
-
-    expect(component.isLoading).toBe(false);
-    expect(component.isFailed).toBe(true);
-  });
-
-  it('should not call AppService when load more and page number equals to total pages number', () => {
-    appService = fixture.debugElement.injector.get(AppService);
-    spyOn(appService, 'getItems').and.returnValue(Observable.of(null));
-
-    component.pageNumber = 2;
-    component.totalPagesNumber = 2;
-    component.loadMore();
-
-    expect(appService.getItems).not.toHaveBeenCalled();
+    component.items$.subscribe(response => {
+      expect(component.isLoading).toBe(false);
+      expect(component.isFailed).toBe(true);
+      expect(response).toBe(null);
+    });
   });
 });
