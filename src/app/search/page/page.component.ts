@@ -24,10 +24,8 @@ export class PageComponent {
   items$: Observable<Item[]>;
   cache: Item[][];
 
-  rowHeight = 320;
-  numberOfRowsPerPage = 3;
-  pageHeight = this.rowHeight * this.numberOfRowsPerPage;
-  debounceTime = 500;
+  pageHeight = 320 * 3; // row height on rows number per page
+  debounceTime = 200;
 
   pageByManual$ = new BehaviorSubject(1);
   pageByScroll$ = this.getPageByScroll();
@@ -68,8 +66,16 @@ export class PageComponent {
       this.pageByResize$)
       .pipe(
         distinct(),
-        filter(page => this.cache[page - 1] === undefined)
+        filter(page => this.isPageNotInCache(page) && this.isPageToLoad(page))
       );
+  }
+
+  isPageNotInCache(page: number): boolean {
+    return this.cache[page - 1] === undefined;
+  }
+
+  isPageToLoad(page: number): boolean {
+    return !this.totalPagesNumber || page <= this.totalPagesNumber;
   }
 
   onFormSubmit(searchText: string) {
@@ -77,13 +83,33 @@ export class PageComponent {
   }
 
   searchItems(searchText: string) {
-    this.cache = [];
+    this.setValuesOnSearchStart();
 
     this.items$ = this.pageToLoad$
       .pipe(
-        tap(this.setValuesOnLoading),
         flatMap((page: number) => this.getItems(searchText, page)),
-        map(() => _.flatMap(this.cache)),
+        map(() => _.flatMap(this.cache))
+      );
+  }
+
+  setValuesOnSearchStart() {
+    this.cache = [];
+    this.isLoading = true;
+    this.isFailed = false;
+  }
+
+  getItems(searchText: string, page: number): Observable<Item[]> {
+    return this.appService.getItems(searchText, page)
+      .pipe(
+        tap(this.setTotals),
+        map((response) => this.transformSearchResponseResults(response.results)),
+        tap(response => {
+          this.cache[page - 1] = response;
+
+          if ((this.pageHeight * page) < window.innerHeight)
+            this.pageByManual$.next(page + 1);
+        }),
+        tap(() => this.stopLoadingOnLastPage(page)),
         catchError(() => {
           this.stopLoadingOnError();
           return of(null);
@@ -91,29 +117,9 @@ export class PageComponent {
       );
   }
 
-  getItems(searchText: string, page: number): Observable<Item[]> {
-    return this.appService.getItems(searchText, page)
-      .pipe(
-        tap(this.setTotalPagesNumber),
-        tap(this.setTotalCount),
-        map((response) => this.transformSearchResponseResults(response.results)),
-        tap(this.stopLoadingOnSuccess),
-        tap(response => {
-          this.cache[page - 1] = response;
-
-          if (this.isNextPageByManual(page))
-            this.pageByManual$.next(page + 1);
-        })
-      );
-  }
-
   @Bind()
-  setTotalPagesNumber(response: SearchResponse) {
+  setTotals(response: SearchResponse) {
     this.totalPagesNumber = response.total_pages;
-  }
-
-  @Bind()
-  setTotalCount(response: SearchResponse) {
     this.totalCount = response.total;
   }
 
@@ -121,22 +127,9 @@ export class PageComponent {
     return results.map(({ id, color, urls }) => ({ id, color, smallUrl: urls.small }));
   }
 
-  isNextPageByManual(currentPageNumber: number): boolean {
-    if (currentPageNumber < this.totalPagesNumber)
-      return (this.pageHeight * currentPageNumber) < window.innerHeight;
-
-    return false;
-  }
-
-  @Bind()
-  setValuesOnLoading() {
-    this.isLoading = true;
-    this.isFailed = false;
-  }
-
-  @Bind()
-  stopLoadingOnSuccess() {
-    this.isLoading = false;
+  stopLoadingOnLastPage(page: number) {
+    if (this.totalPagesNumber === 0 || page === this.totalPagesNumber)
+      this.isLoading = false;
   }
 
   stopLoadingOnError() {

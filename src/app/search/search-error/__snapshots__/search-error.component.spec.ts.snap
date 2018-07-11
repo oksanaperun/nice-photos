@@ -3,7 +3,7 @@
 exports[`SearchErrorComponent should render message 1`] = `
 <app-search-error>
   <h3>
-    Sorry, we can't process your search request right now. Please, try again later
+    Sorry, something went wrong...
   </h3>
   
 </app-search-error>

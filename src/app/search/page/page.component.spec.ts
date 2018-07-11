@@ -76,6 +76,7 @@ describe('PageComponent', () => {
     component.items$.subscribe(() => {
       expect(component.isLoading).toBe(true);
       expect(component.isFailed).toBe(false);
+      expect(component.cache).toBe([]);
     });
   });
 
@@ -99,7 +100,7 @@ describe('PageComponent', () => {
     component.searchItems(searchText);
 
     component.items$.subscribe(response => {
-      expect(component.isLoading).toBe(false);
+      expect(component.isLoading).toBe(true);
       expect(component.isFailed).toBe(false);
       expect(component.totalCount).toBe(2);
       expect(component.totalPagesNumber).toBe(3);
@@ -116,7 +117,20 @@ describe('PageComponent', () => {
     component.items$.subscribe(response => {
       expect(component.isLoading).toBe(false);
       expect(component.isFailed).toBe(true);
-      expect(response).toBe(null);
+      expect(response).toEqual([]);
+    });
+  });
+
+  it('should stop loading when search items returned one page', () => {
+    const response: SearchResponse = { total: 2, total_pages: 1, results: [] };
+
+    appService = fixture.debugElement.injector.get(AppService);
+    spyOn(appService, 'getItems').and.returnValue(Observable.of(response));
+
+    component.searchItems(searchText);
+
+    component.items$.subscribe(() => {
+      expect(component.isLoading).toBe(false);
     });
   });
 });
