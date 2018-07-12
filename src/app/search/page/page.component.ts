@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { fromEvent } from 'rxjs/observable/fromEvent';
@@ -8,6 +8,7 @@ import { of } from 'rxjs/observable/of';
 import { Bind } from 'lodash-decorators';
 import * as _ from 'lodash';
 import { AppService, SearchResponse, SearchResponseResult, Item } from '../../app.service';
+import { WINDOW } from '../../window.service';
 
 @Component({
   selector: 'app-page',
@@ -32,7 +33,7 @@ export class PageComponent {
   pageByResize$ = this.getPageByResize();
   pageToLoad$ = this.getPageToLoad();
 
-  constructor(private appService: AppService) { }
+  constructor(private appService: AppService, @Inject(WINDOW) private window: Window) {}
 
   getPageByScroll(): Observable<number> {
     return fromEvent(window, 'scroll')

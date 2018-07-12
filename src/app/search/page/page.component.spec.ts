@@ -7,6 +7,7 @@ import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/delay';
 import { PageComponent } from './page.component';
 import { AppService, SearchResponse, SearchResponseResult, Item } from '../../app.service';
+import { WINDOW_PROVIDERS } from '../../window.service';
 
 describe('PageComponent', () => {
   let component: PageComponent;
@@ -27,7 +28,11 @@ describe('PageComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [PageComponent],
-      providers: [AppService, { provide: HttpClient, useValue: null }],
+      providers: [
+        AppService,
+        { provide: HttpClient, useValue: null },
+        WINDOW_PROVIDERS,
+      ],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
 

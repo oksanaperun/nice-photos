@@ -10,6 +10,7 @@ exports[`PageComponent should render error when search finished with error 1`] =
   pageByScroll$={[Function Observable]}
   pageHeight={[Function Number]}
   pageToLoad$={[Function Observable]}
+  window={[Function Window]}
 >
   <app-search-form />
   
@@ -28,6 +29,7 @@ exports[`PageComponent should render only search form by default 1`] = `
   pageByScroll$={[Function Observable]}
   pageHeight={[Function Number]}
   pageToLoad$={[Function Observable]}
+  window={[Function Window]}
 >
   <app-search-form />
   
@@ -47,6 +49,7 @@ exports[`PageComponent should render search results when there are search result
   pageHeight={[Function Number]}
   pageToLoad$={[Function Observable]}
   totalCount="0"
+  window={[Function Window]}
 >
   <app-search-form />
   
@@ -66,6 +69,7 @@ exports[`PageComponent should render spinner when search started 1`] = `
   pageByScroll$={[Function Observable]}
   pageHeight={[Function Number]}
   pageToLoad$={[Function Observable]}
+  window={[Function Window]}
 >
   <app-search-form />
   
