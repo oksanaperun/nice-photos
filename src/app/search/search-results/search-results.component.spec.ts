@@ -17,14 +17,14 @@ describe('SearchResultsComponent', () => {
   });
 
   it('should render item list when total items count is greater than zero', () => {
-    component.data = { totalCount: 2 };
+    component.totalCount = 2;
     fixture.detectChanges();
 
     expect(fixture).toMatchSnapshot();
   });
 
   it('should render search tips when total items count equals zero', () => {
-    component.data = { totalCount: 0 };
+    component.totalCount = 0;
     fixture.detectChanges();
 
     expect(fixture).toMatchSnapshot();

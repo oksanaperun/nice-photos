@@ -3,7 +3,14 @@
 exports[`PageComponent should render error when search finished with error 1`] = `
 <app-page
   appService={[Function AppService]}
+  debounceTime={[Function Number]}
   isFailed={[Function Boolean]}
+  pageByManual$={[Function BehaviorSubject]}
+  pageByResize$={[Function Observable]}
+  pageByScroll$={[Function Observable]}
+  pageHeight={[Function Number]}
+  pageToLoad$={[Function Observable]}
+  window={[Function Window]}
 >
   <app-search-form />
   
@@ -16,6 +23,13 @@ exports[`PageComponent should render error when search finished with error 1`] =
 exports[`PageComponent should render only search form by default 1`] = `
 <app-page
   appService={[Function AppService]}
+  debounceTime={[Function Number]}
+  pageByManual$={[Function BehaviorSubject]}
+  pageByResize$={[Function Observable]}
+  pageByScroll$={[Function Observable]}
+  pageHeight={[Function Number]}
+  pageToLoad$={[Function Observable]}
+  window={[Function Window]}
 >
   <app-search-form />
   
@@ -28,11 +42,18 @@ exports[`PageComponent should render only search form by default 1`] = `
 exports[`PageComponent should render search results when there are search results data 1`] = `
 <app-page
   appService={[Function AppService]}
-  searchResultsData$={[Function ScalarObservable]}
+  debounceTime={[Function Number]}
+  pageByManual$={[Function BehaviorSubject]}
+  pageByResize$={[Function Observable]}
+  pageByScroll$={[Function Observable]}
+  pageHeight={[Function Number]}
+  pageToLoad$={[Function Observable]}
+  totalCount="0"
+  window={[Function Window]}
 >
   <app-search-form />
   
-  <app-search-results />
+  
   
   
 </app-page>
@@ -41,11 +62,18 @@ exports[`PageComponent should render search results when there are search result
 exports[`PageComponent should render spinner when search started 1`] = `
 <app-page
   appService={[Function AppService]}
+  debounceTime={[Function Number]}
   isLoading={[Function Boolean]}
+  pageByManual$={[Function BehaviorSubject]}
+  pageByResize$={[Function Observable]}
+  pageByScroll$={[Function Observable]}
+  pageHeight={[Function Number]}
+  pageToLoad$={[Function Observable]}
+  window={[Function Window]}
 >
   <app-search-form />
-  <app-search-spinner />
   
+  <app-search-spinner />
   
   
 </app-page>

@@ -7,7 +7,7 @@ exports[`SearchResultsItemListComponent should render items list 1`] = `
   <mat-grid-list
     cols="3"
     guttersize="15px"
-    rowheight="15em"
+    rowheight="320px"
   >
     
     

@@ -1,5 +1,5 @@
 import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
-import { SearchResultsData } from '../../app.service';
+import { Item } from '../../app.service';
 
 @Component({
   selector: 'app-search-results',
@@ -8,9 +8,10 @@ import { SearchResultsData } from '../../app.service';
 })
 
 export class SearchResultsComponent {
-  @Input() data: SearchResultsData;
+  @Input() totalCount: number;
+  @Input() items: Item[];
 
   get showItemList(): boolean {
-    return this.data.totalCount > 0;
+    return this.totalCount > 0;
   }
 }
